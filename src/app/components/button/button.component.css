@@ -1,0 +1,10 @@
+button {
+    color: black;
+    font-size: 1.2em;
+    border: none;
+    background-color: white;
+}
+
+button:hover {
+    text-decoration: underline;
+}

@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/rt-c-d-editor",
+            "outputPath": "dist/editor",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -29,7 +29,7 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts":  []
           },
           "configurations": {
             "production": {
@@ -68,10 +68,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "rt-c-d-editor:build:production"
+              "browserTarget": "editor:build:production"
             },
             "development": {
-              "browserTarget": "rt-c-d-editor:build:development"
+              "browserTarget": "editor:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -79,7 +79,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "rt-c-d-editor:build"
+            "browserTarget": "editor:build"
           }
         },
         "test": {
@@ -102,5 +102,5 @@
       }
     }
   },
-  "defaultProject": "rt-c-d-editor"
+  "defaultProject": "editor"
 }

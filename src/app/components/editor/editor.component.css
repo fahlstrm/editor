@@ -1,0 +1,8 @@
+:host {
+    grid-column: 2/span 3;
+    grid-row: 3;
+}
+
+.quill {
+    height: 50vh;
+}
