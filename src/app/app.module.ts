@@ -6,6 +6,8 @@ import { HeaderComponent } from './components/header/header.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { ButtonComponent } from './components/button/button.component';
 import { EditorComponent } from './components/editor/editor.component';
+import { DocumentsComponent } from './components/documents/documents.component';
+
 
 import { QuillModule } from 'ngx-quill'
 import { FormsModule } from '@angular/forms';
@@ -16,7 +18,8 @@ import { FormsModule } from '@angular/forms';
     HeaderComponent,
     ToolbarComponent,
     ButtonComponent,
-    EditorComponent
+    EditorComponent,
+    DocumentsComponent
   ],
   imports: [
     BrowserModule,
