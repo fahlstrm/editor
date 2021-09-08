@@ -11,8 +11,19 @@ export class AppComponent {
 
   constructor() { }
   content:string = ``;
+  documentId:string = ``;
+  collectedDoc: string = ``;
 
-  getContent(event : any) {
-    this.content = event;
+  getContent(content : any) {
+    this.content = content;
+  }
+
+  getCollectedDoc(collectedDoc : any) {
+    this.collectedDoc = collectedDoc;
+    console.log(this.collectedDoc)
+  }
+
+  getId(id : any) {
+    this.documentId = id;
   }
 }

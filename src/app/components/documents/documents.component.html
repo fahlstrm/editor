@@ -1,4 +1,15 @@
 
 <div>
     <p>documents works!</p>
+    <form>
+        <div *ngFor="let item of documents.data; index as i">
+              <input 
+                (change)="onSelected($event)"
+                type="radio" 
+                id="{{item._id}}" 
+                name="{{item.title}}" 
+                value="{{item._id}}">
+              <label for="html">{{item.title}}</label>
+        </div>
+    </form>
 </div>

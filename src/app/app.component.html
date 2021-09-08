@@ -1,4 +1,7 @@
 <app-header></app-header>
-<app-toolbar [content]="content"></app-toolbar>
-<app-documents></app-documents>
+<app-toolbar
+    [content]="content"
+    [documentId]="documentId"
+    (collectedDoc)="getCollectedDoc($event)"></app-toolbar>
+<app-documents (documentId)="getId($event)"></app-documents>
 <app-editor (updated)="getContent($event)"></app-editor>
