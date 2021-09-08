@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-editor',
@@ -7,20 +7,26 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 })
 
 
+
 export class EditorComponent implements OnInit {
   content: string = ``;
+  edit: string = ``;
   
   @Output() updated = new EventEmitter<string>();
 
+  // @Input() docToEdit: object = {};
 
- constructor() { }
+  constructor() { }
+
+  updateEditor(event: any) {
+    console.log("editor")
+    console.log(event);
+  }  
 
   ngOnInit(): void {
   }
 
-  onChanged(event: any) {
-    this.updated.emit(event.text);
+  onChanged(text: any) {
+    this.updated.emit(text.html);
   }
-
 }
-

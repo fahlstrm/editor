@@ -2,6 +2,9 @@
 <app-toolbar
     [content]="content"
     [documentId]="documentId"
-    (collectedDoc)="getCollectedDoc($event)"></app-toolbar>
+    (collectedDoc)="getCollectedDoc($event)"
+></app-toolbar>
 <app-documents (documentId)="getId($event)"></app-documents>
-<app-editor (updated)="getContent($event)"></app-editor>
+<app-editor
+    (updated)="getContent($event)"
+></app-editor>

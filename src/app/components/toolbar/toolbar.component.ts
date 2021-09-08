@@ -4,6 +4,7 @@ import { EditorComponent } from '../editor/editor.component';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 
+
 @Component({
   selector: 'app-toolbar',
   templateUrl: './toolbar.component.html',
@@ -22,7 +23,7 @@ export class ToolbarComponent implements OnInit {
   @Input() content: string =``;
   @Input() documentId: string =``;
 
-  @Output() collectedDoc = new EventEmitter<object>();
+  @Output() collectedDoc = new EventEmitter<any>();
 
 
   ngOnInit(): void {
@@ -33,23 +34,16 @@ export class ToolbarComponent implements OnInit {
   }
 
   async openContent() {
-    let test = await this.getDocument(this.documentId);
-    console.log(this.document.length)
-
-    this.collectedDoc.emit(this.document);
-    
+    await this.getDocument(this.documentId);
   }
 
+
   getDocument(id : string) {
-    // console.log(id)
     this.http.get(`${this.url}/${id}`).subscribe(res=> 
       {
-        // console.log(res)
-        this.document = res
-        console.log((this.document))
+        this.document = res;
+        this.collectedDoc.emit(this.document);
       })
-    //   // console.log(this.document)
-    return this.document
   }
 
 

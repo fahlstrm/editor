@@ -10,17 +10,21 @@ export class AppComponent {
   title = 'real time collaborative document editor';
 
   constructor() { }
+
   content:string = ``;
   documentId:string = ``;
-  collectedDoc: string = ``;
+  // docToEdit: any = {};
+  @Output() docToEdit = new EventEmitter<object>();
+
 
   getContent(content : any) {
     this.content = content;
   }
 
   getCollectedDoc(collectedDoc : any) {
-    this.collectedDoc = collectedDoc;
-    console.log(this.collectedDoc)
+    // this.docToEdit = collectedDoc;
+    console.log(collectedDoc)
+    this.docToEdit.emit(collectedDoc);
   }
 
   getId(id : any) {
