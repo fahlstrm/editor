@@ -13,8 +13,10 @@ export class AppComponent {
 
   content:string = ``;
   documentId:string = ``;
-  // docToEdit: any = {};
-  @Output() docToEdit = new EventEmitter<object>();
+  docToEdit:string = ``;
+
+
+  // @Output() docToEdit = new EventEmitter<any>();
 
 
   getContent(content : any) {
@@ -22,9 +24,8 @@ export class AppComponent {
   }
 
   getCollectedDoc(collectedDoc : any) {
-    // this.docToEdit = collectedDoc;
     console.log(collectedDoc)
-    this.docToEdit.emit(collectedDoc);
+    this.docToEdit = collectedDoc;
   }
 
   getId(id : any) {

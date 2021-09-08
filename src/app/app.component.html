@@ -2,9 +2,11 @@
 <app-toolbar
     [content]="content"
     [documentId]="documentId"
+    [docToEdit] = "docToEdit"
     (collectedDoc)="getCollectedDoc($event)"
 ></app-toolbar>
 <app-documents (documentId)="getId($event)"></app-documents>
 <app-editor
     (updated)="getContent($event)"
+    [docToEdit] = "docToEdit"
 ></app-editor>

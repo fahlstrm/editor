@@ -17,11 +17,12 @@ export class ToolbarComponent implements OnInit {
 
   constructor(private http:HttpClient) { }
 
-  url = "https://jsramverk-editor-frah20.azurewebsites.net/documents";
+  url = "https://jsramverk-editor-frah20.azurewebsites.net";
   document: any = [];
 
   @Input() content: string =``;
   @Input() documentId: string =``;
+  @Input() docToEdit: any = {};
 
   @Output() collectedDoc = new EventEmitter<any>();
 
@@ -30,7 +31,15 @@ export class ToolbarComponent implements OnInit {
   }
 
   saveContent() {
+    console.log(this.docToEdit)
     console.log(this.content);
+    const body = this.content;
+    this.postContent(body);
+  }
+
+  postContent(body: string) {
+    console.log(body)
+    return this.http.post(`${this.url}/save/${this.docToEdit.data._id}`, body);
   }
 
   async openContent() {
@@ -39,7 +48,7 @@ export class ToolbarComponent implements OnInit {
 
 
   getDocument(id : string) {
-    this.http.get(`${this.url}/${id}`).subscribe(res=> 
+    this.http.get(`${this.url}/documents/${id}`).subscribe(res=> 
       {
         this.document = res;
         this.collectedDoc.emit(this.document);

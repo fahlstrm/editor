@@ -30,7 +30,7 @@ export class DocumentsComponent implements OnInit {
 
 
   onSelected(event: any) {
-    console.log(event.target)
+    // console.log(event.target)
     console.log(event.target.id)
     this.documentId.emit(event.target.id);
   }
