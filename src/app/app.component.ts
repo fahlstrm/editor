@@ -24,7 +24,6 @@ export class AppComponent {
   }
 
   getUpdatedDocs(event: any) {
-    console.log(event)
     this.updateDocs = event;
   }
 
@@ -33,7 +32,6 @@ export class AppComponent {
   }
 
   getCollectedDoc(collectedDoc : any) {
-    console.log(collectedDoc)
     this.docToEdit = collectedDoc;
   }
 

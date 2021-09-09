@@ -11,7 +11,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class EditorComponent implements OnInit {
   content: string = ``;
   edit: string = ``;
-  // reset: string = ``;
   id: string = ``;
   url = "https://jsramverk-editor-frah20.azurewebsites.net";
   document: any = [];
@@ -40,6 +39,7 @@ export class EditorComponent implements OnInit {
 
   @Input('resetEditor') set reset(value: any) {
     if (value) {
+        console.log(value)
         this.resetEditor();
     }
   }
@@ -51,7 +51,7 @@ export class EditorComponent implements OnInit {
 
   resetEditor() {
     this.content = ``; 
-    this.updateDocs.emit("update");
+    this.updateDocs.emit(`update`);
   }
 
   getDocument(id : string) {

@@ -30,8 +30,9 @@ export class ToolbarComponent implements OnInit {
     const body: any = {
       text: this.content
     }
+    console.log(this.docToEdit)
 
-    if (!this.docToEdit) {
+    if (Object.keys(this.docToEdit).length === 0) {
       this.postContent("0", body)
     } else {
       this.postContent(this.docToEdit.data._id, body);
@@ -42,7 +43,9 @@ export class ToolbarComponent implements OnInit {
     console.log(id)
     this.http.post(`${this.url}/save/${id}`, body).subscribe(res=> 
       {
-        this.resetEditor.emit(this.document);
+        console.log(this.docToEdit)
+        this.docToEdit = {};
+        this.resetEditor.emit(this.docToEdit);
       })
   }
 }

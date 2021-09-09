@@ -18,12 +18,13 @@ export class DocumentsComponent implements OnInit {
   @Input('resetEditor') set resetEditor(value: any) {
     if (value) {
       console.log("he")
-        // this.resetSelected();
+      this.getDocuments();
     }
   }
 
   @Input('updateDocs') set updateDocs(value: any) {
     if (value) {
+      console.log(value)
         this.getDocuments();
         console.log(this.documents)
     }
