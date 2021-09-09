@@ -1,4 +1,6 @@
 import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+
 
 @Component({
   selector: 'app-editor',
@@ -6,40 +8,61 @@ import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
   styleUrls: ['./editor.component.css']
 })
 
-
-
 export class EditorComponent implements OnInit {
   content: string = ``;
   edit: string = ``;
-  // id: string = ``;
-  
+  // reset: string = ``;
+  id: string = ``;
+  url = "https://jsramverk-editor-frah20.azurewebsites.net";
+  document: any = [];
+
+
   @Output() updated = new EventEmitter<string>();
-  // @Output() collectedId = new EventEmitter<string>();
-  // @Input() docToEdit: object = {};
+  @Output() collectedDoc = new EventEmitter<any>();
+  @Output() updateDocs = new EventEmitter<string>();
 
-  constructor() { }
+  // @Input() documentId: string =``;
 
-  //Get docToEdit from app
-  get docToEdit(): any {
-    return this.content;
+  constructor(private http:HttpClient) { }
+
+  //Get id from app
+  get documentId(): any {
+    return this.id;
   }
 
   //Trigger updateEditor once/if value is set. If a document is collected from db
-  @Input('docToEdit') set docToEdit(value: any) {
+  @Input('documentId') set documentId(value: any) {
     if (value) {
-        this.content = value;
-        this.updateEditor(this.content);
+        this.id = value;
+        this.updateEditor(this.id);
     }
-}
+  }
 
-  updateEditor(event: any) {
-    this.content = event.data.text;
-    // this.setID(event.data._id);
-  }  
+  @Input('resetEditor') set reset(value: any) {
+    if (value) {
+        this.resetEditor();
+    }
+  }
 
-  // setID(docId: string) {
-  //   this.id = docId;
-  // }
+
+  async updateEditor(id: any) {
+    await this.getDocument(id);
+  }
+
+  resetEditor() {
+    this.content = ``; 
+    this.updateDocs.emit("update");
+  }
+
+  getDocument(id : string) {
+    this.http.get(`${this.url}/documents/${id}`).subscribe(res=> 
+      {
+        this.document = res;
+        console.log(res);
+        this.content = this.document.data.text;
+        this.collectedDoc.emit(this.document);
+      })
+  }
 
   ngOnInit(): void {
   }

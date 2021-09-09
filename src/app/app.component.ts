@@ -14,10 +14,19 @@ export class AppComponent {
   content:string = ``;
   documentId:string = ``;
   docToEdit:string = ``;
+  resetEditor:string = ``;
+  updateDocs:string = ``;
 
 
   // @Output() docToEdit = new EventEmitter<any>();
+  getResetDoc(reset: any) {
+    this.resetEditor = reset;
+  }
 
+  getUpdatedDocs(event: any) {
+    console.log(event)
+    this.updateDocs = event;
+  }
 
   getContent(content : any) {
     this.content = content;

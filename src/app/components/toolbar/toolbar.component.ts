@@ -13,47 +13,36 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class ToolbarComponent implements OnInit {
   buttonText: string = 'Spara';
-  buttonTex: string = 'Öppna';
-
-  constructor(private http:HttpClient) { }
-
   url = "https://jsramverk-editor-frah20.azurewebsites.net";
   document: any = [];
 
+  constructor(private http:HttpClient) { }
+
   @Input() content: string =``;
-  @Input() documentId: string =``;
   @Input() docToEdit: any = {};
 
-  @Output() collectedDoc = new EventEmitter<any>();
-
+  @Output() resetEditor = new EventEmitter<any>();
 
   ngOnInit(): void {
   }
 
   saveContent() {
-    console.log(this.docToEdit)
-    console.log(this.content);
-    const body = this.content;
-    this.postContent(body);
+    const body: any = {
+      text: this.content
+    }
+
+    if (!this.docToEdit) {
+      this.postContent("0", body)
+    } else {
+      this.postContent(this.docToEdit.data._id, body);
+    }
   }
 
-  postContent(body: string) {
-    console.log(body)
-    return this.http.post(`${this.url}/save/${this.docToEdit.data._id}`, body);
-  }
-
-  async openContent() {
-    await this.getDocument(this.documentId);
-  }
-
-
-  getDocument(id : string) {
-    this.http.get(`${this.url}/documents/${id}`).subscribe(res=> 
+  postContent(id: string, body: string) {
+    console.log(id)
+    this.http.post(`${this.url}/save/${id}`, body).subscribe(res=> 
       {
-        this.document = res;
-        this.collectedDoc.emit(this.document);
+        this.resetEditor.emit(this.document);
       })
   }
-
-
 }
