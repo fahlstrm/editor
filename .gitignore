@@ -1,7 +1,7 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 .htaccess
-.use-case.txt
+use-case.txt
 
 # compiled output
 /dist
