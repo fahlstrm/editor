@@ -24,8 +24,9 @@ cache:
 
 
 script:
-    - npm test --browsers=ChromeHeadlessCI
-    - ./node_modules/.bin/karma start --browsers Firefox --single-run
+    - npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
+    # - npm test --browsers=ChromeHeadlessCI
+    # - ./node_modules/.bin/karma start --browsers Firefox --single-run
 
 after_success:
     - npm run report-coveralls
