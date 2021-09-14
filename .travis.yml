@@ -13,6 +13,7 @@ git:
 
 before_script:
     - npm install
+     - npm install -g @angular/cli
 
 script:
     - npm test
@@ -20,4 +21,3 @@ script:
 after_success:
     - npm run report-coveralls
     - npm run report-codecov
-    
