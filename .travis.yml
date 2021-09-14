@@ -7,8 +7,14 @@ node_js:
 
 sudo: false
 
+addons:
+  chrome: stable
+
 git:
     submodules: false
+
+before-install:
+    - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost 
 
 before_script:
     - npm install
