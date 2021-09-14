@@ -21,7 +21,7 @@ git:
 before_script:
     - npm install
     - npm install -g @angular/cli
-    - karma start --browsers Firefox --single-run
+
 
 
 cache:
@@ -30,6 +30,7 @@ cache:
 
 
 script:
+    - karma start --browsers Firefox --single-run
     - npm test --no-watch --no-progress --browsers=ChromeHeadlessCI
     # - npm test --browsers=ChromeHeadlessCI
     # - ./node_modules/.bin/karma start --browsers Firefox --single-run
