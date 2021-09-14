@@ -23,4 +23,20 @@ describe('ButtonComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  
+  it('should trigger eventemitter on click', () => {
+
+    // spy on event emitter
+    const component = fixture.componentInstance; 
+    spyOn(component.btnClick, 'emit');
+ 
+    // trigger the click
+    const nativeElement = fixture.nativeElement;
+    const button = nativeElement.querySelector('button');
+    button.dispatchEvent(new Event('click'));
+ 
+    fixture.detectChanges();
+ 
+    expect(component.btnClick.emit).toHaveBeenCalledWith();
+ });
 });
