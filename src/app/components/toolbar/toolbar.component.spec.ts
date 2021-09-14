@@ -4,6 +4,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import {HttpClientModule} from '@angular/common/http';
 
 import { ToolbarComponent } from './toolbar.component';
+import { ButtonComponent } from './../button/button.component';
 
 describe('ToolbarComponent', () => {
   let component: ToolbarComponent;
@@ -11,7 +12,7 @@ describe('ToolbarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ToolbarComponent ],
+      declarations: [ ToolbarComponent, ButtonComponent ],
       imports: [HttpClientTestingModule], 
     })
     .compileComponents();
@@ -33,4 +34,12 @@ describe('ToolbarComponent', () => {
     const toolbar = fixture.componentInstance;
     expect(toolbar.buttonText).toEqual('Spara');
   });
+
+  it('should contain an button-element of the button component', () => {
+    fixture.detectChanges();
+    const compiled = fixture.debugElement.nativeElement;
+    expect(compiled.querySelector('button')).not.toBe(null);
+  });
+
+
 });
