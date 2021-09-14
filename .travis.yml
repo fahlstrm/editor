@@ -14,8 +14,12 @@ before_script:
     - npm install
     - npm install -g @angular/cli
 
+addons:
+  chrome: stable
+
+
 script:
-    - npm test
+    - npm test --browsers=ChromeHeadlessCI
 
 after_success:
     - npm run report-coveralls
