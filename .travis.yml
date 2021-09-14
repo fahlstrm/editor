@@ -17,7 +17,10 @@ git:
 before_script:
     - npm install
     - npm install -g @angular/cli
-    - export CHROME_BIN=usr/bin/google-chrome
+    - LATEST_CHROMEDRIVER_VERSION=`curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE"`
+    - curl "https://chromedriver.storage.googleapis.com/${LATEST_CHROMEDRIVER_VERSION}/chromedriver_linux64.zip" -O
+    - unzip chromedriver_linux64.zip -d ~/bin
+
 
 cache:
   directories:
@@ -25,7 +28,7 @@ cache:
 
 
 script:
-    - npm run test --watch=false --no-watch --no-progress --browsers=ChromeHeadlessCI
+    - npm test --no-watch --no-progress --browsers=ChromeHeadlessCI
     # - npm test --browsers=ChromeHeadlessCI
     # - ./node_modules/.bin/karma start --browsers Firefox --single-run
 
