@@ -20,8 +20,6 @@ export class EditorComponent implements OnInit {
   @Output() collectedDoc = new EventEmitter<any>();
   @Output() updateDocs = new EventEmitter<string>();
 
-  // @Input() documentId: string =``;
-
   constructor(private http:HttpClient) { }
 
   //Get id from app

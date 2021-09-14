@@ -1,5 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import {HttpClientModule} from '@angular/common/http';
+
 import { ToolbarComponent } from './toolbar.component';
 
 describe('ToolbarComponent', () => {
@@ -8,7 +11,8 @@ describe('ToolbarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ToolbarComponent ]
+      declarations: [ ToolbarComponent ],
+      imports: [HttpClientTestingModule], 
     })
     .compileComponents();
   });
@@ -21,5 +25,12 @@ describe('ToolbarComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  
+  it(`should have as buttonText 'Spara'`, () => {
+    const fixture = TestBed.createComponent(ToolbarComponent);
+    const toolbar = fixture.componentInstance;
+    expect(toolbar.buttonText).toEqual('Spara');
   });
 });
