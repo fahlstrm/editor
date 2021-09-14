@@ -30,7 +30,7 @@ cache:
 
 
 script:
-    # - karma start --browsers Firefox --single-run
+    - karma start --no-watch --no-progress --single-run
     - npm test --no-watch --no-progress --single-run
     # - npm test --browsers=ChromeHeadlessCI
     # - ./node_modules/.bin/karma start --browsers Firefox --single-run
