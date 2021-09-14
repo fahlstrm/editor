@@ -17,6 +17,7 @@ git:
 before_script:
     - npm install
     - npm install -g @angular/cli
+    - export CHROME_BIN=usr/bin/google-chrome
 
 cache:
   directories:
@@ -24,7 +25,7 @@ cache:
 
 
 script:
-    - npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
+    - npm run test --watch=false --no-watch --no-progress --browsers=ChromeHeadlessCI
     # - npm test --browsers=ChromeHeadlessCI
     # - ./node_modules/.bin/karma start --browsers Firefox --single-run
 
