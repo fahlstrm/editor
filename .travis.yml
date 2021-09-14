@@ -8,7 +8,7 @@ node_js:
 sudo: false
 
 addons:
-  chrome: stable
+  firefox: "49.0"
 
 git:
     submodules: false
@@ -17,9 +17,7 @@ git:
 before_script:
     - npm install
     - npm install -g @angular/cli
-    - LATEST_CHROMEDRIVER_VERSION=`curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE"`
-    - curl "https://chromedriver.storage.googleapis.com/${LATEST_CHROMEDRIVER_VERSION}/chromedriver_linux64.zip" -O
-    - unzip chromedriver_linux64.zip -d ~/bin
+    - karma start --browsers Firefox --single-run
 
 
 cache:
