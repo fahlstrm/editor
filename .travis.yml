@@ -30,10 +30,7 @@ cache:
 
 
 script:
-    - karma start --no-watch --no-progress --single-run
-    - npm test --no-watch --no-progress --single-run
-    # - npm test --browsers=ChromeHeadlessCI
-    # - ./node_modules/.bin/karma start --browsers Firefox --single-run
+    - npm test --watch=false --no-progress --single-run
 
 after_success:
     - npm run report-coveralls
