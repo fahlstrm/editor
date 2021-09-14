@@ -39,7 +39,7 @@ module.exports = function (config) {
     autoWatch: true,
     browsers: ['Chrome'],
 
-    singleRun: false,
+    singleRun: true,
     restartOnFileChange: true
   });
 };
