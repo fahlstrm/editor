@@ -39,6 +39,13 @@ module.exports = function (config) {
     autoWatch: true,
     browsers: ['Chrome'],
 
+    customLaunchers: {
+      ChromeHeadlessNoSandbox: {
+        base: 'ChromeHeadless',
+        flags: ['--no-sandbox']
+      }
+    },
+
     singleRun: false,
     restartOnFileChange: true
   });
