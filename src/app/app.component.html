@@ -1,20 +1,24 @@
 <app-header></app-header>
-<app-toolbar
+<!-- <app-toolbar
     [content]="content"
     [docToEdit] = "docToEdit"
     (resetEditor)="getResetDoc($event)"
-></app-toolbar>
+></app-toolbar> -->
 
 <app-documents 
-    (documentId)="getId($event)"
-    [resetEditor] = "resetEditor"
+    [content]="content"
+    [docToEdit] = "docToEdit"
     [updateDocs] = "updateDocs"
+    (documentId)="getId($event)"
+    (resetEditor)="getResetDoc($event)"
+
 ></app-documents>
 
 <app-editor
     (updated)="getContent($event)"
     (updateDocs)="getUpdatedDocs($event)"
     (collectedDoc)="getCollectedDoc($event)"
-    [resetEditor] = "resetEditor"
+    (resetEditor)="getResetDoc($event)"
+    [resetEdit] = "resetEditor"
     [documentId]="documentId"
 ></app-editor>

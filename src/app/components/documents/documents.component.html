@@ -1,5 +1,11 @@
 
 <div>
+    <app-button 
+        [btnText]="buttonText" 
+        (btnClick)="clearEditor()" 
+    >
+    </app-button>
+
     <h2>Befintliga dokument</h2>
     <form>
         <div *ngFor="let item of documents.data; index as i">
@@ -9,7 +15,8 @@
                 type="radio" 
                 id="{{item._id}}" 
                 name="i+1" 
-                value="{{item._id}}">
+                value="{{item._id}}"
+                >
               <label for="html">{{item.title}}</label>
         </div>
     </form>

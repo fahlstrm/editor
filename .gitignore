@@ -2,6 +2,7 @@
 
 .htaccess
 use-case.txt
+.travis.yml
 
 # compiled output
 /dist

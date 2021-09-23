@@ -2,6 +2,7 @@
 <div class="quill">
     <quill-editor name="content" format="html" placeholder="Skriv text här eller ladda in dokument"
         [(ngModel)]="content"
+        (keyup)="onKeyUp($event)"
         (onContentChanged)="onChanged($event)"
         (docToEdit)="updateEditor($event)"
         >

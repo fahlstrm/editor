@@ -1,5 +1,9 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 
+import socketIOClient from "socket.io-client";
+const ENDPOINT = "http://127.0.0.1:1337";
+
+const socket = socketIOClient(ENDPOINT);
 
 @Component({
   selector: 'app-root',
@@ -21,9 +25,11 @@ export class AppComponent {
   // @Output() docToEdit = new EventEmitter<any>();
   getResetDoc(reset: any) {
     this.resetEditor = reset;
+    console.log(this.resetEditor)
   }
 
   getUpdatedDocs(event: any) {
+    console.log(event)
     this.updateDocs = event;
   }
 
