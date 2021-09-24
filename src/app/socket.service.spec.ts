@@ -9,7 +9,10 @@ describe('SocketService', () => {
   let service: SocketService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      imports: [SocketIoModule.forRoot(config)], 
+      providers: [ SocketService ]
+    });
     service = TestBed.inject(SocketService);
   });
 

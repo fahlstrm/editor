@@ -1,5 +1,9 @@
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { SocketService } from 'src/app/socket.service';
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+
+const config: SocketIoConfig = { url: 'https://jsramverk-editor-frah20.azurewebsites.net' };
 
 
 describe('AppComponent', () => {
@@ -8,6 +12,8 @@ describe('AppComponent', () => {
       declarations: [
         AppComponent
       ],
+      imports: [ SocketIoModule.forRoot(config)], 
+      providers: [ SocketService ]
     }).compileComponents();
   });
 
