@@ -31,19 +31,4 @@ describe('ToolbarComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
-  
-  // it(`should have as buttonText 'Spara'`, () => {
-  //   const fixture = TestBed.createComponent(ToolbarComponent);
-  //   const toolbar = fixture.componentInstance;
-  //   expect(toolbar.buttonText).toEqual('Spara');
-  // });
-
-  // it('should contain an button-element of the button component', () => {
-  //   fixture.detectChanges();
-  //   const compiled = fixture.debugElement.nativeElement;
-  //   expect(compiled.querySelector('button')).not.toBe(null);
-  // });
-
-
 });

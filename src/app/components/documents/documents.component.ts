@@ -32,7 +32,8 @@ export class DocumentsComponent implements OnInit {
 
   @Input('updateDocs') set updateDocs(value: any) {
     if (value) {
-        this.getDocuments();
+      console.log(value)
+      this.getDocuments();
     }
   }
 

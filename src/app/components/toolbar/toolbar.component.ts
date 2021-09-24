@@ -12,7 +12,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 })
 export class ToolbarComponent implements OnInit {
-  buttonText: string = 'Spara';
+  infotext: string = `Dokumenten sparas automatiskt.
+  Om du skapar ett nytt dokument måste andra användare ladda om sidan för att det nya dokumentet skall synas
+   `;
   url = "https://jsramverk-editor-frah20.azurewebsites.net";
   document: any = [];
 

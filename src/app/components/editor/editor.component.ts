@@ -104,13 +104,14 @@ export class EditorComponent implements OnInit {
     }
     else if (this.text && this.document) {
       console.log("Id finns")
-
       this.updated.emit(this.text);
+
       const body: any = {
         id: this.document.data._id,
         text: this.text
       }
       this.socketService.sendMessage(body);
+      this.updateDocs.emit(this.id);
     // this.saveContent();
     }
   }
@@ -137,10 +138,12 @@ export class EditorComponent implements OnInit {
   createContent(body: any) {
     this.http.post(`${this.url}/save/new/doc`, body).subscribe(res=> 
       {
+        console.log(res)
         this.document = res;
         this.document.data._id=this.document.data.insertedId;
         this.id = this.document.data.insertedId;
-        this.updateDocs.emit(this.document._id);
+        console.log(this.id)
+        this.updateDocs.emit(this.id);
       })
   }
 
