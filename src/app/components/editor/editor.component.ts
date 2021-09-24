@@ -44,7 +44,6 @@ export class EditorComponent implements OnInit {
     console.log("in reset")
     if (value) {
         console.log(value)
-
         this.resetEditor();
     }
   }

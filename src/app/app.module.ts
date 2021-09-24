@@ -14,7 +14,7 @@ import { FormsModule } from '@angular/forms';
 
 // Socket related 
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
-const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
+const config: SocketIoConfig = { url: 'https://jsramverk-editor-frah20.azurewebsites.net', options: {} };
 
 
 
