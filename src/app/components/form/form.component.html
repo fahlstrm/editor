@@ -1,0 +1,42 @@
+
+<div *ngIf="existing == true; then existingUser else registerUser"></div>
+<ng-template #existingUser>
+    <h2> Logga in för att editera dokument</h2>
+
+    <form>
+        <label for="username">Användarnamn:</label>
+        <input type="text" id="username">
+        <label for="password">Lösenord:</label>
+        <input type="password" id="password">
+        <input class="submit" type="submit" value="Logga in">
+        
+    </form>
+    
+    <app-button class="new-user"
+      [btnText]="buttonText" 
+      (btnClick)="createNewUser()" 
+        >
+    </app-button>  
+</ng-template>
+<ng-template #registerUser>
+    <h2> Skapa användare för att editera dokument</h2>
+
+    <form>
+        <label for="username">Användarnamn:</label>
+        <input type="text" id="username">
+        <label for="password">Lösenord:</label>
+        <input type="password" id="password">
+        <input class="submit" type="submit" value="Skapa användare">
+
+    </form>
+
+    <app-button class="new-user"
+    [btnText]="buttonText" 
+    (btnClick)="returnLogin()" 
+      >
+    </app-button>  
+
+</ng-template>
+
+
+

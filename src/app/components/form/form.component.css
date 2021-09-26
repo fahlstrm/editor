@@ -1,0 +1,44 @@
+:host {
+    grid-column: 2/span 3;
+    grid-row: 2;
+    display: grid;
+    justify-content: center;
+    grid-template-rows: 3;
+}
+
+h2 {
+    grid-row: 1;
+}
+
+form {
+    width: 40vw;
+    grid-row: 2;
+    display: flex;
+    flex-direction: column;
+}
+
+input {
+    margin-top: 1vh;
+    height: 5vh;
+}
+
+label {
+    margin-top: 2vh;
+}
+
+.submit {
+    background-color: rgba(207, 207, 207, 0.644);
+    box-shadow: 5px  10px 10px #b9b6b691;
+    font-size: 1.2em;
+    height: 6vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.submit:hover {
+    background-color: rgba(233, 233, 233, 0.644);
+}
+
+.new-user {
+    grid-row: 3;
+    margin-top: 5vh;
+}

@@ -1,24 +1,39 @@
 <app-header></app-header>
-<app-toolbar
+
+
+<div *ngIf="auth == true; then authenticaded else login"></div>
+<ng-template #authenticaded>Content to render when condition is true.
+
+    <app-toolbar
     [content]="content"
     [docToEdit] = "docToEdit"
     (resetEditor)="getResetDoc($event)"
-></app-toolbar>
-
-<app-documents 
+    ></app-toolbar> 
+    <app-documents 
     [content]="content"
     [docToEdit] = "docToEdit"
     [updateDocs] = "updateDocs"
     (documentId)="getId($event)"
     (resetEditor)="getResetDoc($event)"
 
-></app-documents>
+    ></app-documents>
 
-<app-editor
-    (updated)="getContent($event)"
-    (updateDocs)="getUpdatedDocs($event)"
-    (collectedDoc)="getCollectedDoc($event)"
-    (resetEditor)="getResetDoc($event)"
-    [resetEdit] = "resetEditor"
-    [documentId]="documentId"
-></app-editor>
+    <app-editor
+        (updated)="getContent($event)"
+        (updateDocs)="getUpdatedDocs($event)"
+        (collectedDoc)="getCollectedDoc($event)"
+        (resetEditor)="getResetDoc($event)"
+        [resetEdit] = "resetEditor"
+        [documentId]="documentId"
+    ></app-editor>
+    
+
+</ng-template>
+<ng-template #login>
+    <app-form>
+    </app-form>
+
+</ng-template>
+
+
+

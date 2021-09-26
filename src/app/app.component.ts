@@ -20,6 +20,7 @@ export class AppComponent {
   docToEdit:string = ``;
   resetEditor:string = ``;
   updateDocs:string = ``;
+  auth: boolean = false;
 
 
   // @Output() docToEdit = new EventEmitter<any>();
