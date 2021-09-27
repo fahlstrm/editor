@@ -20,16 +20,31 @@ form {
 input {
     margin-top: 1vh;
     height: 5vh;
+    border: 1px solid #a1a1a1;
+    font-size: 1.2em;
 }
 
-label {
+label, p {
     margin-top: 2vh;
+}
+
+.wrapp {
+    display: flex;
+    flex-direction: row;
+}
+
+.radio-span {
+    border: 1px  solid #a1a1a1;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
 }
 
 .submit {
     background-color: rgba(207, 207, 207, 0.644);
     box-shadow: 5px  10px 10px #b9b6b691;
     font-size: 1.2em;
+    margin-top: 5vh;
     height: 6vh;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
@@ -38,7 +53,18 @@ label {
     background-color: rgba(233, 233, 233, 0.644);
 }
 
+.alert {
+    color: #c22222;
+    font-size: 1.2em;
+    margin-top: 2vh;
+}
+
 .new-user {
     grid-row: 3;
     margin-top: 5vh;
+}
+
+.required {
+    display: flex;
+    flex-direction: row;
 }

@@ -1,42 +1,112 @@
 
 <div *ngIf="existing == true; then existingUser else registerUser"></div>
+<h2> {{ h2 }} </h2>
+<div class="required"> <p class="alert">*</p> <p>required</p></div>
+
 <ng-template #existingUser>
-    <h2> Logga in för att editera dokument</h2>
+    <form [formGroup]="loginForm" (ngSubmit)="loginUser()">
+        <div class="required">      
+            <label for="username">Användarnamn:</label>
+            <div class="alert" *ngIf="username.errors?.required">
+                *
+            </div> 
+        </div>
+        <input [formControl]="username"  type="text" id="username">
+        <!-- <input formControlName="username" type="text" id="username" [formcontrol]="username"> -->
 
-    <form>
-        <label for="username">Användarnamn:</label>
-        <input type="text" id="username">
-        <label for="password">Lösenord:</label>
-        <input type="password" id="password">
-        <input class="submit" type="submit" value="Logga in">
-        
+        <div *ngIf="username.invalid && (username.dirty || username.touched)"
+        class="alert">
+            <div *ngIf="username.errors?.required">
+                Du måste ange användarnamn
+            </div>
+        </div>
+
+        <div class="required">      
+            <label for="password">Lösenord:</label>
+            <div class="alert" *ngIf="password.errors?.required">
+                *
+            </div> 
+        </div>
+        <input [formControl]="password" type="password" id="password"  required>
+
+        <div *ngIf="password.invalid && (password.dirty || password.touched)"
+        class="alert">
+            <div *ngIf="password.errors?.required">
+                Du måste ange ditt lösenord
+            </div>
+        </div>
+
+
+        <input class="submit" [disabled]="!loginForm.valid" type="submit" value="Logga in">
     </form>
-    
-    <app-button class="new-user"
-      [btnText]="buttonText" 
-      (btnClick)="createNewUser()" 
-        >
-    </app-button>  
 </ng-template>
+
 <ng-template #registerUser>
-    <h2> Skapa användare för att editera dokument</h2>
+    <form [formGroup]="createForm" (ngSubmit)="createUser()">
+        <div class="required">      
+            <label for="newUsername">Användarnamn:</label>
+            <div class="alert" *ngIf="newUsername.errors?.required">
+                *
+            </div> 
+        </div>
+        <input [formControl]="newUsername" minlength="5" type="text" id="newUsername">
+        <div *ngIf="newUsername.invalid && (newUsername.dirty || newUsername.touched)"
+        class="alert">
+            <div *ngIf="newUsername.errors?.required">
+                Du måste ange ett användarnamn
+            </div>
+            <div *ngIf="newUsername.errors?.minlength">
+                För kort användarnamn, ange minst fem bokstäver 
+              </div>
+        </div>
 
-    <form>
-        <label for="username">Användarnamn:</label>
-        <input type="text" id="username">
-        <label for="password">Lösenord:</label>
-        <input type="password" id="password">
-        <input class="submit" type="submit" value="Skapa användare">
+        <div class="required">      
+            <label for="newPassword">Lösenord:</label>
+            <div class="alert" *ngIf="newPassword.errors?.required">
+                *
+            </div> 
+        </div>
+        <input [formControl]="newPassword" minlength="5" type="newPassword" id="newPassword">
 
+        <div *ngIf="newPassword.invalid && (newPassword.dirty || newPassword.touched)"
+        class="alert">
+            <div *ngIf="newPassword.errors?.required">
+                Du måste ange ett lösenord
+            </div>
+            <div *ngIf="newPassword.errors?.minlength">
+                Fört kort lösenord, ange minst fem tecken
+            </div>
+        </div>
+
+
+        <div class="required">      
+            <p>Välj rättigheter:    </p>
+            <div class="alert" *ngIf="rights.errors?.required">
+            *
+            </div> 
+       </div>
+
+        <span class="radio-span">
+            <span class="wrapp">    
+                <label for="read">Läsa:</label>
+                <input [formControl]="rights" type="radio" id="read" name="rights" value="read">
+            </span>
+            
+            <span class="wrapp">
+                <label for="write">Läsa och skriva:</label>
+                <input [formControl]="rights" type="radio" id="write" name="rights" value="write">
+            </span>
+        </span>
+
+        <input class="submit" [disabled]="!createForm.valid" type="submit" value="Skapa användare">
     </form>
-
-    <app-button class="new-user"
-    [btnText]="buttonText" 
-    (btnClick)="returnLogin()" 
-      >
-    </app-button>  
-
 </ng-template>
+
+<app-button class="new-user"
+[btnText]="buttonText" 
+(btnClick)= "existing == true ? createNewUser() : returnLogin()"
+>
+</app-button> 
 
 
 
