@@ -1,6 +1,6 @@
-import { Component, OnInit  } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, Validators, FormControl, FormGroup } from '@angular/forms';
-
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-form',
@@ -8,11 +8,17 @@ import { FormBuilder, Validators, FormControl, FormGroup } from '@angular/forms'
   styleUrls: ['./form.component.css']
 })
 export class FormComponent implements OnInit {
-
   existing: boolean = true;
   buttonText: string = 'Skapa ny användare';
   h2: string = 'Logga in för att åtkomst av dokument';
-  constructor(private formBuilder: FormBuilder) {
+  url = "https://jsramverk-editor-frah20.azurewebsites.net";
+
+  @Output() auth = new EventEmitter<any>();
+
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private http:HttpClient) {
 
    }
 
@@ -27,7 +33,7 @@ export class FormComponent implements OnInit {
     Validators.required,
     Validators.minLength(5)
   ]);
-  rights = new FormControl('', [Validators.required]);
+  permission = new FormControl('', [Validators.required]);
   
   loginForm: FormGroup = this.formBuilder.group({
     username: this.username,
@@ -37,7 +43,7 @@ export class FormComponent implements OnInit {
   createForm: FormGroup = this.formBuilder.group({
     newUsername: this.newUsername,
     newPassword: this.newPassword,
-    rights: this.rights
+    permission: this.permission
   });
 
 
@@ -59,11 +65,35 @@ export class FormComponent implements OnInit {
 
   loginUser() {
     console.log(this.loginForm.value);
-    // this.loginForm.reset();
+    var suceeed = null; 
+    let body = {
+      username: this.loginForm.value.username,
+      password: this.loginForm.value.password,
+    }
+    this.http.post(`${this.url}/users/login`, body).subscribe((res: any) => 
+      {
+        let result = res;
+        console.log(res.data.result);
+        console.log(res.data.result.token);
+        this.auth.emit(res.data.result);
+      })
+    this.loginForm.reset();
   }
 
   createUser() {
     console.log(this.createForm.value)
+ 
+    let body = {
+      username: this.createForm.value.newUsername,
+      password: this.createForm.value.newPassword,
+      permission: this.createForm.value.permission
+    }
+    console.log(body)
+    this.http.post(`${this.url}/users/create`, body).subscribe(res=> 
+      {
+        console.log(res)
+      })
+
     this.createForm.reset();
 
   }

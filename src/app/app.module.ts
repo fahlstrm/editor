@@ -15,6 +15,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 // Socket related 
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { FormComponent } from './components/form/form.component';
+import { UsersComponent } from './components/users/users.component';
 const config: SocketIoConfig = { url: 'https://jsramverk-editor-frah20.azurewebsites.net', options: {} };
 
 
@@ -28,6 +29,7 @@ const config: SocketIoConfig = { url: 'https://jsramverk-editor-frah20.azurewebs
     EditorComponent,
     DocumentsComponent,
     FormComponent,
+    UsersComponent,
   ],
   imports: [
     BrowserModule,

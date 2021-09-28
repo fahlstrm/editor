@@ -21,6 +21,8 @@ export class AppComponent {
   resetEditor:string = ``;
   updateDocs:string = ``;
   auth: boolean = false;
+  token: any = null;
+  user: object = {};
 
 
   // @Output() docToEdit = new EventEmitter<any>();
@@ -44,5 +46,11 @@ export class AppComponent {
 
   getId(id : any) {
     this.documentId = id;
+  }
+
+  getAuth(auth: any) {
+    this.token = auth.token;
+    this.user = auth;
+    this.auth = true;
   }
 }

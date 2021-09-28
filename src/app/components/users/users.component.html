@@ -1,0 +1,16 @@
+
+<div>
+    <h2>Lägg till användare för dokumentet</h2>
+    <form>
+        <div *ngFor="let user of users; index as i">
+              <input 
+                (change)="onSelected($event)"
+                type="checkbox" 
+                id="{{user._id}}" 
+                name="i+1" 
+                value="{{user._id}}"
+                >
+              <label for="html">{{users[i].username}}</label>
+        </div>
+    </form>
+</div>

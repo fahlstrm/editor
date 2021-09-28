@@ -9,7 +9,8 @@ import { SocketService } from 'src/app/socket.service';
   styleUrls: ['./documents.component.css']
 })
 export class DocumentsComponent implements OnInit {
-  url = "https://jsramverk-editor-frah20.azurewebsites.net";
+  // url = "https://jsramverk-editor-frah20.azurewebsites.net";
+  url = "http://localhost:3000"
   documents: any = [];
   buttonText: string = 'Skapa nytt dokument';
   checked: any = null;
@@ -22,13 +23,6 @@ export class DocumentsComponent implements OnInit {
   @Output() documentId = new EventEmitter<string>();
   @Output() resetEditor = new EventEmitter<any>();
 
-  
-  // @Input('resetEditor') set resetEditor(value: any) {
-  //   if (value) {
-  //     console.log("he")
-  //     this.getDocuments();
-  //   }
-  // }
 
   @Input('updateDocs') set updateDocs(value: any) {
     if (value) {
@@ -48,9 +42,7 @@ export class DocumentsComponent implements OnInit {
     }
   }
 
-
   async ngOnInit() {
-    
     await this.getDocuments();
   }
 
@@ -59,19 +51,19 @@ export class DocumentsComponent implements OnInit {
   }
 
   async getDocuments() {
+    
    await this.http.get(`${this.url}/documents/all`).subscribe(res=> 
       {
         this.documents = res;
+        console.log(res)
       })
   }
-
 
   onSelected(event: any) {
     this.documentId.emit(event.target.id);
     this.socketService.createRoom(event.target.id);
   }
 
-  
 
   // setSelected(id: any) {
   //   console.log(id)

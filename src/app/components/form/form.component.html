@@ -81,7 +81,7 @@
 
         <div class="required">      
             <p>Välj rättigheter:    </p>
-            <div class="alert" *ngIf="rights.errors?.required">
+            <div class="alert" *ngIf="permission.errors?.required">
             *
             </div> 
        </div>
@@ -89,12 +89,12 @@
         <span class="radio-span">
             <span class="wrapp">    
                 <label for="read">Läsa:</label>
-                <input [formControl]="rights" type="radio" id="read" name="rights" value="read">
+                <input [formControl]="permission" type="radio" id="r" name="permission" value="r">
             </span>
             
             <span class="wrapp">
                 <label for="write">Läsa och skriva:</label>
-                <input [formControl]="rights" type="radio" id="write" name="rights" value="write">
+                <input [formControl]="permission" type="radio" id="rw" name="permission" value="rw">
             </span>
         </span>
 

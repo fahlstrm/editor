@@ -22,6 +22,10 @@ export class EditorComponent implements OnInit {
   @Output() updated = new EventEmitter<string>();
   @Output() collectedDoc = new EventEmitter<any>();
   @Output() updateDocs = new EventEmitter<string>();
+  
+  @Input() user: any;
+
+
 
   constructor(
     private http:HttpClient, 
@@ -78,26 +82,16 @@ export class EditorComponent implements OnInit {
     });
   }
 
-  // ngOnInit() {}
-
-  // onKeyUp(text: any) {
-  //   if (text.html || this.document.data._id) {
-  //     this.updated.emit(text.html);
-  //     this.socketService.sendMessage(text.html);
-  //   // this.saveContent();
-  //   }
-  // }
-
   onChanged(text: any) {
     this.text= text.html;
   }
 
   onKeyUp(text: any) {
-    console.log(this.document)
-    console.log(text)
     if(Object.keys(this.document).length === 0) {
+      console.log(this.user.user.username);
       const body: any = {
-        text: this.text
+        text: this.text,
+        username: this.user.user.username
       }
       console.log("Sparar nytt id")
       this.createContent(body);
@@ -120,8 +114,6 @@ export class EditorComponent implements OnInit {
     const body: any = {
       text: this.content
     }
-    console.log("I spara")
-    console.log(this.document)
     if (Object.keys(this.document).length !== 0) {
       this.postContent(this.document.data._id, body)
     } else {
@@ -146,5 +138,4 @@ export class EditorComponent implements OnInit {
         this.updateDocs.emit(this.id);
       })
   }
-
 }

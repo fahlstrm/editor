@@ -2,20 +2,19 @@
 
 
 <div *ngIf="auth == true; then authenticaded else login"></div>
-<ng-template #authenticaded>Content to render when condition is true.
+<ng-template #authenticaded>
 
     <app-toolbar
-    [content]="content"
-    [docToEdit] = "docToEdit"
-    (resetEditor)="getResetDoc($event)"
+        [content]="content"
+        [docToEdit] = "docToEdit"
+        (resetEditor)="getResetDoc($event)"
     ></app-toolbar> 
     <app-documents 
-    [content]="content"
-    [docToEdit] = "docToEdit"
-    [updateDocs] = "updateDocs"
-    (documentId)="getId($event)"
-    (resetEditor)="getResetDoc($event)"
-
+        [content]="content"
+        [docToEdit] = "docToEdit"
+        [updateDocs] = "updateDocs"
+        (documentId)="getId($event)"
+        (resetEditor)="getResetDoc($event)"
     ></app-documents>
 
     <app-editor
@@ -25,12 +24,19 @@
         (resetEditor)="getResetDoc($event)"
         [resetEdit] = "resetEditor"
         [documentId]="documentId"
+        [user]="user"
     ></app-editor>
-    
+
+    <app-users>
+
+    </app-users>
 
 </ng-template>
+
 <ng-template #login>
-    <app-form>
+    <app-form
+    (auth)="getAuth($event)"
+    >
     </app-form>
 
 </ng-template>
