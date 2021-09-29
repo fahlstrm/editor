@@ -1,10 +1,17 @@
 
 <div class="quill">
-    <quill-editor name="content" format="html" placeholder="Skriv text här eller ladda in dokument"
-        [(ngModel)]="content"
-        (keyup)="onKeyUp($event)"
-        (onContentChanged)="onChanged($event)"
-        (docToEdit)="updateEditor($event)"
-        >
-    </quill-editor>
+    <div class="alert" *ngIf="document.length == 0">
+        Du måste välja dokument för att kunna editera
+    </div > 
+    <div class="quill-div" [ngClass]="{'disabled' : document.length==0}">
+        <quill-editor name="content" format="html" placeholder="Skriv text här eller ladda in dokument"
+            [(ngModel)]="content"
+            (keyup)="onKeyUp($event)"
+            (onContentChanged)="onChanged($event)"
+            (docToEdit)="updateEditor($event)"
+            [disabled]="document.length == 0"
+            >
+        </quill-editor>
+    </div>
+
 </div>

@@ -1,9 +1,12 @@
 
 <div *ngIf="existing == true; then existingUser else registerUser"></div>
 <h2> {{ h2 }} </h2>
+
 <div class="required"> <p class="alert">*</p> <p>required</p></div>
 
 <ng-template #existingUser>
+    <p class="alert"> {{ err }} </p>
+
     <form [formGroup]="loginForm" (ngSubmit)="loginUser()">
         <div class="required">      
             <label for="username">Användarnamn:</label>
@@ -77,26 +80,6 @@
                 Fört kort lösenord, ange minst fem tecken
             </div>
         </div>
-
-
-        <div class="required">      
-            <p>Välj rättigheter:    </p>
-            <div class="alert" *ngIf="permission.errors?.required">
-            *
-            </div> 
-       </div>
-
-        <span class="radio-span">
-            <span class="wrapp">    
-                <label for="read">Läsa:</label>
-                <input [formControl]="permission" type="radio" id="r" name="permission" value="r">
-            </span>
-            
-            <span class="wrapp">
-                <label for="write">Läsa och skriva:</label>
-                <input [formControl]="permission" type="radio" id="rw" name="permission" value="rw">
-            </span>
-        </span>
 
         <input class="submit" [disabled]="!createForm.valid" type="submit" value="Skapa användare">
     </form>

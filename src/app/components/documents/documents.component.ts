@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { SocketService } from 'src/app/socket.service';
+import { FormBuilder, Validators, FormControl, FormGroup } from '@angular/forms';
+
 
 
 @Component({
@@ -15,14 +17,17 @@ export class DocumentsComponent implements OnInit {
   buttonText: string = 'Skapa nytt dokument';
   checked: any = null;
   idSelected: any=null;
- 
+
   constructor(
     private http:HttpClient, 
-    private socketService: SocketService) { }
+    private socketService: SocketService,
+    private formBuilder: FormBuilder) { }
 
   @Output() documentId = new EventEmitter<string>();
-  @Output() resetEditor = new EventEmitter<any>();
+  @Output() reset = new EventEmitter<any>();
 
+  @Input() user: any;
+  @Input() token: any;
 
   @Input('updateDocs') set updateDocs(value: any) {
     if (value) {
@@ -31,15 +36,34 @@ export class DocumentsComponent implements OnInit {
     }
   }
 
-  // @Input() content: string =``;
-  @Input() docToEdit: any = {};
+  // @Input('content') set content(value: any) {
+  //   if (value) {
+  //       console.log(value)
+  //       this.checked = "true";
+  //       this.getDocuments();
+  //   }
+  // }
 
-  @Input('content') set content(value: any) {
-    if (value) {
-        console.log(value)
-        this.checked = "true";
-        this.getDocuments();
+  
+  title = new FormControl('', [Validators.required, Validators.minLength(5)]);
+  titleForm: FormGroup = this.formBuilder.group({
+    title: this.title
+  });
+
+  createNewDoc() {
+    console.log(this.titleForm.value);
+    const body = {
+      title: this.titleForm.value.title,
+      username: this.user.user.username,
     }
+    const headers = new HttpHeaders({ 'x-access-token': this.token});
+    this.http.post(`${this.url}/save/new/doc`, body, {headers}).subscribe(res=> 
+      {
+        console.log(res)
+        this.getDocuments();
+        this.titleForm.reset();
+        this.reset.emit("reset");
+      })
   }
 
   async ngOnInit() {
@@ -51,52 +75,24 @@ export class DocumentsComponent implements OnInit {
   }
 
   async getDocuments() {
-    
-   await this.http.get(`${this.url}/documents/all`).subscribe(res=> 
-      {
-        this.documents = res;
-        console.log(res)
+      this.documents = [];
+      // console.log(this.httpOptions.headers)
+      const headers = new HttpHeaders({ 'x-access-token': this.token});
+  
+    await this.http.get(`${this.url}/documents/all`, {headers}).subscribe((res: any)=> 
+        {
+          for (let doc in res.data) {
+            for ( let user in res.data[doc].users) {
+                if (res.data[doc].users[user] == this.user.user.username) {
+                this.documents.push(res.data[doc])
+              }
+            }
+          }
       })
   }
 
   onSelected(event: any) {
     this.documentId.emit(event.target.id);
     this.socketService.createRoom(event.target.id);
-  }
-
-
-  // setSelected(id: any) {
-  //   console.log(id)
-  //   for (var obj in this.documents.data) {
-  //     console.log((this.documents.data[obj]._id))
-  //     if (this.documents.data[obj]._id === id) {
-  //       this.idSelected = this.documents.data[obj]._id;
-  //     }
-   
-  //   }
-  //   // this.documents.forEach((i :any) =>{
-  //   //   console.log(i)
-  //   //   if (i === id) {
-  //   //     console.log("vald! ")
-  //   //   }
-  //   //   // i.isSelected=false;
-  //   // })
-  // }
-
-
-
-  resetSelected() {
-    console.log(this.documents)
-    this.documents.forEach((i :any) =>{
-      console.log(i)
-      i.isSelected=false;
-    })
-  }
-
-
-  clearEditor() {
-    this.resetEditor.emit("reset");
-    this.getDocuments();
-  }
-   
+  } 
 }

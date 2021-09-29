@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+
 
 
 @Component({
@@ -10,30 +11,56 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class UsersComponent implements OnInit {
 
   constructor(private http:HttpClient) { }
-
-  users: any; 
+  availableUsers: any; 
+  currentUsers: any; 
+  id: any;
   // url = "https://jsramverk-editor-frah20.azurewebsites.net";
   url = "http://localhost:3000"
 
-    
+  // @Input() documentId: any = null;
 
-  ngOnInit(): void {
-    this.getUsers();
+  @Input('documentId') set docId(documentId: any) {
+    if (documentId) {
+        this.getDocUsers(documentId);
+        this.id = documentId;
+    }
   }
 
+  @Input('reset') set reset(value: any) {
+    if (value) {
+        this.id = null;
+        this.currentUsers = null;
+        this.availableUsers = null;
+    }
+  }
+  @Input() token: any;
 
-  async getUsers() {
-    await this.http.get(`${this.url}/users/all`).subscribe((res: any)=> 
+
+  ngOnInit(): void {
+  }
+
+  async getDocUsers(id: any) {
+    const headers = new HttpHeaders({ 'x-access-token': this.token});
+    
+    await this.http.get(`${this.url}/documents/users/${id}`, {headers}).subscribe((res: any)=> 
        {
-         console.log(res)
-         this.users = res.data;
-         console.log(this.users[0])
+         this.currentUsers = res.data.currentUsers;
+         this.availableUsers = res.data.availableUsers;
+
        })
    }
  
   onSelected(event: any) {
-
+    let body = {
+      id: this.id,
+      newUser: event.target.name
+    }
+    const headers = new HttpHeaders({ 'x-access-token': this.token});
+    
+    this.http.post(`${this.url}/save/new/user`, body, {headers}).subscribe((res: any)=> 
+      {
+        console.log(res);
+        this.getDocUsers(this.id);
+      })
   }
-
-
 }

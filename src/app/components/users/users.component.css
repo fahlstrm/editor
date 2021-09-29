@@ -2,3 +2,11 @@
     grid-column: 5;
     grid-row: 3;
 }
+
+.alert {
+    color: #c22222;
+}
+
+.succeed {
+    color: rgb(43, 102, 41); 
+}

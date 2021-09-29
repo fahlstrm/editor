@@ -5,30 +5,31 @@
 <ng-template #authenticaded>
 
     <app-toolbar
-        [content]="content"
-        [docToEdit] = "docToEdit"
-        (resetEditor)="getResetDoc($event)"
     ></app-toolbar> 
     <app-documents 
-        [content]="content"
-        [docToEdit] = "docToEdit"
+        [user]="user"
+        [token]="token"
         [updateDocs] = "updateDocs"
         (documentId)="getId($event)"
-        (resetEditor)="getResetDoc($event)"
+        (reset)="resetAll($event)"
     ></app-documents>
 
     <app-editor
         (updated)="getContent($event)"
-        (updateDocs)="getUpdatedDocs($event)"
         (collectedDoc)="getCollectedDoc($event)"
-        (resetEditor)="getResetDoc($event)"
-        [resetEdit] = "resetEditor"
+        (reset)="resetAll($event)"
+        [reset]="reset"
         [documentId]="documentId"
         [user]="user"
+        [token]="token"
     ></app-editor>
 
-    <app-users>
+    <app-users
+        [documentId]="documentId"
+        [reset]="reset"
+        [token]="token"
 
+    >
     </app-users>
 
 </ng-template>

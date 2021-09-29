@@ -15,15 +15,17 @@ export class EditorComponent implements OnInit {
   content: any = ``;
   edit: string = ``;
   id: string = ``;
-  url = "https://jsramverk-editor-frah20.azurewebsites.net";
+  // url = "https://jsramverk-editor-frah20.azurewebsites.net";
+  url ="http://localhost:3000"
   document: any = [];
   text: any;
 
+
   @Output() updated = new EventEmitter<string>();
   @Output() collectedDoc = new EventEmitter<any>();
-  @Output() updateDocs = new EventEmitter<string>();
   
   @Input() user: any;
+  @Input() token: any;
 
 
 
@@ -44,10 +46,8 @@ export class EditorComponent implements OnInit {
     }
   }
 
-  @Input('resetEdit') set reset(value: any) {
-    console.log("in reset")
+  @Input('reset') set reset(value: any) {
     if (value) {
-        console.log(value)
         this.resetEditor();
     }
   }
@@ -61,12 +61,12 @@ export class EditorComponent implements OnInit {
     this.id=``;
     this.content = ``; 
     this.document=``;
-
-    this.updateDocs.emit(`update`);
   }
 
   getDocument(id : string) {
-    this.http.get(`${this.url}/documents/${id}`).subscribe(res=> 
+    const headers = new HttpHeaders({ 'x-access-token': this.token});
+
+    this.http.get(`${this.url}/documents/${id}`, {headers}).subscribe(res=> 
       {
         this.document = res;
         this.content = this.document.data.text;
@@ -78,7 +78,6 @@ export class EditorComponent implements OnInit {
   ngOnInit(): void {
     this.socketService.getMessage('message').subscribe((data: any) => {
       this.content = data;
-      // console.log(this.id)
     });
   }
 
@@ -87,55 +86,14 @@ export class EditorComponent implements OnInit {
   }
 
   onKeyUp(text: any) {
-    if(Object.keys(this.document).length === 0) {
-      console.log(this.user.user.username);
-      const body: any = {
-        text: this.text,
-        username: this.user.user.username
-      }
-      console.log("Sparar nytt id")
-      this.createContent(body);
-    }
-    else if (this.text && this.document) {
-      console.log("Id finns")
-      this.updated.emit(this.text);
-
-      const body: any = {
-        id: this.document.data._id,
-        text: this.text
-      }
-      this.socketService.sendMessage(body);
-      this.updateDocs.emit(this.id);
-    // this.saveContent();
-    }
-  }
-
-  saveContent() {
+    this.updated.emit(this.text);
     const body: any = {
-      text: this.content
+      id: this.document.data._id,
+      title: this.document.data.title,
+      text: this.text,
+      users: this.document.data.users
     }
-    if (Object.keys(this.document).length !== 0) {
-      this.postContent(this.document.data._id, body)
-    } else {
-      this.createContent(body);
-    }
-  }
-
-  postContent(id: string, body: string) {
-    this.http.post(`${this.url}/save/${id}`, body).subscribe(res=> 
-      {
-      })
-  }
-
-  createContent(body: any) {
-    this.http.post(`${this.url}/save/new/doc`, body).subscribe(res=> 
-      {
-        console.log(res)
-        this.document = res;
-        this.document.data._id=this.document.data.insertedId;
-        this.id = this.document.data.insertedId;
-        console.log(this.id)
-        this.updateDocs.emit(this.id);
-      })
+    
+    this.socketService.sendMessage(body);
   }
 }

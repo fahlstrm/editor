@@ -1,4 +1,5 @@
 import { Component, Output, EventEmitter } from '@angular/core';
+import { HttpHeaders } from '@angular/common/http';
 
 // import socketIOClient from "socket.io-client";
 // const ENDPOINT = "http://127.0.0.1:1337";
@@ -18,22 +19,21 @@ export class AppComponent {
   content:string = ``;
   documentId:string = ``;
   docToEdit:string = ``;
-  resetEditor:string = ``;
+  reset:string = ``;
   updateDocs:string = ``;
   auth: boolean = false;
   token: any = null;
-  user: object = {};
-
+  // headers: any = this.httpOptions;
+  user: object = {
+    // user: {
+    //   username: "testare"
+    // }
+  };
 
   // @Output() docToEdit = new EventEmitter<any>();
-  getResetDoc(reset: any) {
-    this.resetEditor = reset;
-    console.log(this.resetEditor)
-  }
-
-  getUpdatedDocs(event: any) {
-    console.log(event)
-    this.updateDocs = event;
+  resetAll(reset: any) {
+    this.reset = reset;
+    console.log(this.reset)
   }
 
   getContent(content : any) {

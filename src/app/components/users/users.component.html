@@ -1,16 +1,23 @@
 
-<div>
-    <h2>Lägg till användare för dokumentet</h2>
+<div *ngIf="id">
+    <h3>Lägg till användare för dokumentet</h3>
     <form>
-        <div *ngFor="let user of users; index as i">
+        <div *ngFor="let user of availableUsers; index as i">
+        
               <input 
                 (change)="onSelected($event)"
                 type="checkbox" 
                 id="{{user._id}}" 
-                name="i+1" 
-                value="{{user._id}}"
+                name="{{user.username}}" 
+                value="{{user.username}}"
                 >
-              <label for="html">{{users[i].username}}</label>
+              <label for="html">{{availableUsers[i].username}}</label>
         </div>
     </form>
+
+    <h3>Användare som kan editera:</h3>
+    <p *ngFor="let user of currentUsers; index as i">
+          {{ user }}
+    </p>
+
 </div>

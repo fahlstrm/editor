@@ -1,14 +1,35 @@
 
 <div>
-    <app-button 
-        [btnText]="buttonText" 
-        (btnClick)="clearEditor()" 
-    >
-    </app-button>
+    <form [formGroup]="titleForm" (ngSubmit)="createNewDoc()">
+        <div class="required">      
+            <label for="title">Titel:</label>
+            <div class="alert" *ngIf="title.errors?.required">
+                *
+            </div> 
+        </div>
+        <input [formControl]="title" type="text" id="title">
+        <div *ngIf="title.invalid && (title.dirty || title.touched)"
+        class="alert">
+            <div *ngIf="title.errors?.required">
+                Du måste ange en titel
+            </div>
+            <div *ngIf="title.errors?.minlength">
+                För kort titel, ange minst tre bokstäver 
+              </div>
+        </div>
+        <input class="submit" [disabled]="!titleForm.valid" type="submit" value="Skapa nytt dokument">
 
-    <h2>Befintliga dokument</h2>
+    </form>
+
+    <!-- <app-button 
+        [btnText]="buttonText" 
+        (btnClick)="createNew()" 
+    >
+    </app-button> -->
+
+    <h2>Tillgängliga dokument</h2>
     <form>
-        <div *ngFor="let item of documents.data; index as i">
+        <div *ngFor="let item of documents; index as i">
               <input 
                 (change)="onSelected($event)"
                 [(ngModel)]="item.resetSelected"

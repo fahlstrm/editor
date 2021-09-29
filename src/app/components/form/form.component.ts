@@ -11,7 +11,9 @@ export class FormComponent implements OnInit {
   existing: boolean = true;
   buttonText: string = 'Skapa ny användare';
   h2: string = 'Logga in för att åtkomst av dokument';
-  url = "https://jsramverk-editor-frah20.azurewebsites.net";
+  // url = "https://jsramverk-editor-frah20.azurewebsites.net";
+  url = "http://localhost:3000";
+  err: string = ``; 
 
   @Output() auth = new EventEmitter<any>();
 
@@ -33,7 +35,6 @@ export class FormComponent implements OnInit {
     Validators.required,
     Validators.minLength(5)
   ]);
-  permission = new FormControl('', [Validators.required]);
   
   loginForm: FormGroup = this.formBuilder.group({
     username: this.username,
@@ -42,8 +43,7 @@ export class FormComponent implements OnInit {
 
   createForm: FormGroup = this.formBuilder.group({
     newUsername: this.newUsername,
-    newPassword: this.newPassword,
-    permission: this.permission
+    newPassword: this.newPassword
   });
 
 
@@ -64,31 +64,30 @@ export class FormComponent implements OnInit {
   }
 
   loginUser() {
-    console.log(this.loginForm.value);
-    var suceeed = null; 
+    this.err = ``;
     let body = {
       username: this.loginForm.value.username,
       password: this.loginForm.value.password,
     }
+
     this.http.post(`${this.url}/users/login`, body).subscribe((res: any) => 
       {
-        let result = res;
-        console.log(res.data.result);
-        console.log(res.data.result.token);
-        this.auth.emit(res.data.result);
+        if (res.data.result.err) {
+          this.err = res.data.result.err;
+        } else {
+          this.auth.emit(res.data.result);
+        }
       })
     this.loginForm.reset();
   }
 
   createUser() {
-    console.log(this.createForm.value)
- 
     let body = {
       username: this.createForm.value.newUsername,
       password: this.createForm.value.newPassword,
       permission: this.createForm.value.permission
     }
-    console.log(body)
+
     this.http.post(`${this.url}/users/create`, body).subscribe(res=> 
       {
         console.log(res)
