@@ -15,8 +15,8 @@ export class EditorComponent implements OnInit {
   content: any = ``;
   edit: string = ``;
   id: string = ``;
-  // url = "https://jsramverk-editor-frah20.azurewebsites.net";
-  url ="http://localhost:3000"
+  url = "https://jsramverk-editor-frah20.azurewebsites.net";
+  // url ="http://localhost:3000"
   document: any = [];
   text: any;
 
@@ -66,15 +66,37 @@ export class EditorComponent implements OnInit {
   getDocument(id : string) {
     const headers = new HttpHeaders({ 'x-access-token': this.token});
 
-    this.http.get(`${this.url}/documents/${id}`, {headers}).subscribe(res=> 
+    this.http.get(`${this.url}/documents/${id}`, {headers}).subscribe(( res: any)=> 
       {
+        console.log(res.data.text)
+        this.content = res.data.text;
         this.document = res;
-        this.content = this.document.data.text;
         this.collectedDoc.emit(this.document);
       })
   }
 
-  // listen to the socket.io server
+  // Get document content by graphql
+  // getDocument(id: string) {
+  //   fetch(`${this.url}/graphql`, {
+  //     method: 'POST',
+  //     headers: {
+  //         'x-access-token': this.token,
+  //         'Content-Type': 'application/json',
+  //         'Accept': 'application/json',
+  //     },
+  //     body: JSON.stringify({ query: `{ document(id : "${id}") {_id, title, text,  users{ _id, username  } } }`  })
+  // })
+  //     .then(r => r.json())
+  //     .then(data => {
+  //       console.log('data returned:', data)
+  //       data = Object.values(data);
+  //       this.document = data[0].document;
+  //       console.log(this.document)
+  //       this.content = data[0].document.text;
+  //       });
+  // }
+
+  // Listen to the socket.io server
   ngOnInit(): void {
     this.socketService.getMessage('message').subscribe((data: any) => {
       this.content = data;
@@ -93,7 +115,7 @@ export class EditorComponent implements OnInit {
       text: this.text,
       users: this.document.data.users
     }
-    
+
     this.socketService.sendMessage(body);
   }
 }

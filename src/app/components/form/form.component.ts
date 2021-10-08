@@ -11,10 +11,9 @@ export class FormComponent implements OnInit {
   existing: boolean = true;
   buttonText: string = 'Skapa ny användare';
   h2: string = 'Logga in för att åtkomst av dokument';
-  // url = "https://jsramverk-editor-frah20.azurewebsites.net";
-  url = "http://localhost:3000";
-  err: string = ``; 
-
+  url = "https://jsramverk-editor-frah20.azurewebsites.net";
+  // url = "http://localhost:3000";
+  err: string = ``;   
   @Output() auth = new EventEmitter<any>();
 
 
@@ -88,9 +87,13 @@ export class FormComponent implements OnInit {
       permission: this.createForm.value.permission
     }
 
-    this.http.post(`${this.url}/users/create`, body).subscribe(res=> 
+    this.http.post(`${this.url}/users/create`, body).subscribe((res: any)=> 
       {
-        console.log(res)
+        if (res.data.result.insertedId) {
+          this.returnLogin();
+
+          location.reload();
+        }
       })
 
     this.createForm.reset();
