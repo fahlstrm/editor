@@ -5,6 +5,11 @@
 <ng-template #authenticaded>
 
     <app-toolbar
+        [token]="token"
+        [documentId]="documentId"
+        [content]="content"
+        (type)="getType($event)"
+
     ></app-toolbar> 
     <app-documents 
         [user]="user"
@@ -12,25 +17,38 @@
         [updateDocs] = "updateDocs"
         (documentId)="getId($event)"
         (reset)="resetAll($event)"
+        [type]="type"
     ></app-documents>
 
     <app-editor
         (updated)="getContent($event)"
         (collectedDoc)="getCollectedDoc($event)"
+        (comment)="getComment($event)"
         (reset)="resetAll($event)"
         [reset]="reset"
         [documentId]="documentId"
+        [docToEdit]="docToEdit"
         [user]="user"
         [token]="token"
+        [type]="type"
     ></app-editor>
 
     <app-users
         [documentId]="documentId"
         [reset]="reset"
         [token]="token"
-
+        [doc]="docToEdit"
+        [type]="type"
     >
     </app-users>
+    <app-comments
+        [token]="token"
+        [user]="user"
+        [type]="type"
+        [documentId]="documentId"
+        [comment]="comment"
+        [docToEdit]="docToEdit">
+    </app-comments>
 
 </ng-template>
 

@@ -2,6 +2,6 @@
     margin: 0 auto;
     display: grid;
     grid-template-columns: 20vw 20vw 20vw 20vw 20vw;
-    grid-template-rows: 10vh 7vh 73vh 10vh;
+    grid-template-rows: 10vh 7vh 50vh 33vh;
 }
 

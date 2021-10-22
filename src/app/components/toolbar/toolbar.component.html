@@ -1,7 +1,30 @@
-<div>
-    <p>
-        {{infotext }}
-    </p>
-        
-</div>
+
+<app-button  *ngIf="typeEditor"
+[btnText]="editorButton" 
+(btnClick)= "typeEditor == 'doc' ? codeEditor() : regEditor()"
+>
+</app-button>
+
+
+<p>
+    {{infotext }}
+</p>
+
+<div *ngIf="typeEditor == 'doc'; then doc else code"></div>
+<ng-template #doc>
+    <app-button  *ngIf="documentId"
+        [btnText]="pdfButton" 
+        (btnClick)="createPdf()" 
+    >
+    </app-button>
+</ng-template>
+
+<ng-template #code>
+    <app-button  *ngIf="documentId"
+    [btnText]="codeButton" 
+    (btnClick)="runCode()" 
+>
+</app-button>
+</ng-template>
+
 

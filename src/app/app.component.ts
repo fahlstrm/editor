@@ -18,7 +18,7 @@ export class AppComponent {
 
   content:string = ``;
   documentId:string = ``;
-  docToEdit:string = ``;
+  docToEdit: any;
   reset:string = ``;
   updateDocs:string = ``;
   auth: boolean = false;
@@ -29,28 +29,44 @@ export class AppComponent {
     //   username: "frida"
     // }
   };
+  type: any = "doc";
+  comment: any = null;
 
-  // @Output() docToEdit = new EventEmitter<any>();
+
   resetAll(reset: any) {
     this.reset = reset;
     console.log(this.reset)
   }
 
   getContent(content : any) {
+    console.log("i app", content)
     this.content = content;
   }
 
   getCollectedDoc(collectedDoc : any) {
+    console.log(collectedDoc)
     this.docToEdit = collectedDoc;
+    if (this.type == "doc") {
+      this.docToEdit.data.comments.reverse();
+    }
   }
 
   getId(id : any) {
     this.documentId = id;
+    console.log("i app", this.documentId)
   }
 
   getAuth(auth: any) {
     this.token = auth.token;
     this.user = auth;
     this.auth = true;
+  }
+
+  getComment(comment: any) {
+    this.comment = comment;
+  }
+
+  getType(type: any) {
+    this.type = type;
   }
 }

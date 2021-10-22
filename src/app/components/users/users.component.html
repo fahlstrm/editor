@@ -14,6 +14,28 @@
               <label for="html">{{availableUsers[i].username}}</label>
         </div>
     </form>
+    <h3>Bjud in användare med epost</h3>
+
+    <form [formGroup]="inviteUserForm" (ngSubmit)="sendEmail()">
+        <div class="required">      
+            <label for="email">E-post:</label>
+            <div class="alert" *ngIf="email.errors?.required">
+                *
+            </div> 
+        </div>
+        <input [formControl]="email" type="email" ngModel [email]="true" id="email">
+        <div *ngIf="email.invalid && (email.dirty || email.touched)"
+        class="alert">
+            <div *ngIf="email.errors?.required">
+                Du måste ange en e-post
+            </div>
+            <div *ngIf="email.errors?.minlength">
+                För kort epost 
+              </div>
+        </div>
+        <input class="submit" [disabled]="!inviteUserForm.valid" type="submit" value="Skicka inbjudan">
+
+    </form>
 
     <h3>Användare som kan editera:</h3>
     <p *ngFor="let user of currentUsers; index as i">

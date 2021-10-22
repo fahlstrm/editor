@@ -1,10 +1,17 @@
-button {
+:host {
     color: black;
-    font-size: 1.2em;
-    border: none;
+    font-size: 1em;
+    border: 1px grey;
+}
+
+button {
     background-color: white;
+    height: 3.5vh;
+    width: 12vw;
+    border-radius: 50px;
 }
 
 button:hover {
-    text-decoration: underline;
+    background-color: rgb(172, 90, 23);
+    color: white;
 }

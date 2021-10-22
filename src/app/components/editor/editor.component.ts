@@ -1,9 +1,8 @@
 import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { SocketService } from 'src/app/socket.service';
+import { DomSanitizer } from '@angular/platform-browser'
 
-
-var throttleTimer;
 
 @Component({
   selector: 'app-editor',
@@ -15,27 +14,44 @@ export class EditorComponent implements OnInit {
   content: any = ``;
   edit: string = ``;
   id: string = ``;
-  url = "https://jsramverk-editor-frah20.azurewebsites.net";
-  // url ="http://localhost:3000"
+  // url = "https://jsramverk-editor-frah20.azurewebsites.net";
+  url ="http://localhost:3000"
   document: any = [];
-  text: any;
-
+  type: string = `doc`;
+  selected: any = null;
 
   @Output() updated = new EventEmitter<string>();
   @Output() collectedDoc = new EventEmitter<any>();
+  @Output() comment = new EventEmitter<any>();
   
-  @Input() user: any;
-  @Input() token: any;
-
 
 
   constructor(
-    private http:HttpClient, 
-    private socketService: SocketService) { }
+    private http:HttpClient,
+    private sanitizer: DomSanitizer, 
+    private socketService: SocketService) {}
 
-  //Get id from app
-  get documentId(): any {
-    return this.id;
+  // //Get id from app
+  // get documentId(): any {
+  //   return this.id;
+  // }
+
+  @Input() user: any;
+  @Input() token: any;
+  @Input() docToEdit: any;
+
+  // @Input('editor') set editor(value: any) {
+  //   if (value) {
+  //     console.log(value)
+  //   }
+  // }
+
+  @Input('type') set typeEditor(value: any) {
+    if (value) {
+      this.document = [];
+      this.type = value;
+      this.content = null;
+    }
   }
 
   //Trigger updateEditor once/if value is set. If a document is collected from db
@@ -63,38 +79,36 @@ export class EditorComponent implements OnInit {
     this.document=``;
   }
 
+
+  selectionChanged(event: any) {
+    let quill = event.editor;
+    let range = quill.getSelection();
+    if (range != null ) {
+        let text = quill.getText(range.index, range.length);
+        this.selected = text;
+        let comment = {
+          selected: this.selected,
+          id: this.id,
+          content: this.content,
+        }
+        this.comment.emit(comment);
+    }
+  }
+
+
   getDocument(id : string) {
     const headers = new HttpHeaders({ 'x-access-token': this.token});
-
+    
     this.http.get(`${this.url}/documents/${id}`, {headers}).subscribe(( res: any)=> 
       {
-        console.log(res.data.text)
-        this.content = res.data.text;
+        console.log(res.data.content)
+        this.content = res.data.content;
         this.document = res;
         this.collectedDoc.emit(this.document);
+        this.updated.emit(this.content);
       })
   }
 
-  // Get document content by graphql
-  // getDocument(id: string) {
-  //   fetch(`${this.url}/graphql`, {
-  //     method: 'POST',
-  //     headers: {
-  //         'x-access-token': this.token,
-  //         'Content-Type': 'application/json',
-  //         'Accept': 'application/json',
-  //     },
-  //     body: JSON.stringify({ query: `{ document(id : "${id}") {_id, title, text,  users{ _id, username  } } }`  })
-  // })
-  //     .then(r => r.json())
-  //     .then(data => {
-  //       console.log('data returned:', data)
-  //       data = Object.values(data);
-  //       this.document = data[0].document;
-  //       console.log(this.document)
-  //       this.content = data[0].document.text;
-  //       });
-  // }
 
   // Listen to the socket.io server
   ngOnInit(): void {
@@ -103,17 +117,22 @@ export class EditorComponent implements OnInit {
     });
   }
 
-  onChanged(text: any) {
-    this.text= text.html;
+  onChanged(content: any) {
+    this.content= content.html;
   }
 
-  onKeyUp(text: any) {
-    this.updated.emit(this.text);
+  onKeyUp(content: any) {
+    this.updated.emit(this.content);
     const body: any = {
-      id: this.document.data._id,
-      title: this.document.data.title,
-      text: this.text,
-      users: this.document.data.users
+      id: this.document._id,
+      title: this.document.title,
+      users: this.document.users,
+      // id: this.document.data._id,
+      type: this.type,
+      // title: this.document.data.title,
+      content: this.content,
+      comments: this.docToEdit.comments
+      // users: this.document.data.users
     }
 
     this.socketService.sendMessage(body);

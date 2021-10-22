@@ -1,0 +1,63 @@
+<div *ngIf="type == 'doc' && documentId; then doc else code"></div>
+<ng-template #doc>
+<h3> Kommentarer </h3>
+
+<div class="createComment" *ngIf="commentLength == 0 && !selected" >
+    <p>Det har inte skapats några kommentaret för detta dokument ännu!</p>
+</div>
+
+<div class="createComment" *ngIf="selected" >
+    <p>Markerad text:  </p>
+    <p> {{ selected }} </p>
+    <form [formGroup]="commentForm" (ngSubmit)="createNewComment()">
+        <div class="required">      
+            <label for="comment">Kommentar:</label>
+            <div class="alert" *ngIf="comment.errors?.required">
+                *
+            </div> 
+        </div>
+        <input [formControl]="comment" type="text" id="comment">
+        <div *ngIf="comment.invalid && (comment.dirty || comment.touched)"
+        class="alert">
+            <div *ngIf="comment.errors?.required">
+                Du måste ange en kommentar
+            </div>
+            <div *ngIf="comment.errors?.minlength">
+                För kort kommentar, ange minst fem bokstäver 
+            </div>
+        </div>
+        <input class="submit" [disabled]="!commentForm.valid" type="submit" value="Skapa ny kommentar">
+
+    </form>
+</div>
+
+<div class="comments" *ngFor="let comment of commentLength; index as i">
+    <div class="oneComment">
+        <div class="commentheader">
+            <div class="commentContent">
+                <p>Postad: </p>
+                <p>{{comment.date}}</p>
+            </div>
+            <div class="commentContent">
+                <p>Skriven av:</p>
+                <p> {{comment.user}}</p>
+    
+            </div>
+        </div>
+      
+        <div class="commentContent">
+            <p>Ursprung: </p>
+            <p class="italic">{{comment.selected}}</p>
+        </div>
+
+        <div class="commentContent">
+            <p>Kommentar: </p>
+            <p> {{comment.comment}}</p>
+        </div>
+    </div>
+  
+</div>
+</ng-template>
+
+<ng-template #code> </ng-template>
+

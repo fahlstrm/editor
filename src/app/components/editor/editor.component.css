@@ -2,17 +2,24 @@
     grid-column: 2/span 3;
     grid-row: 3;
     position: relative;
-    /* display: flex;
-    justify-content: center; */
+    display: flex;
+    flex-direction: column;
 }
 
-.quill-div {
+.quill-div, .codemirror-div {
     height: 100%;
+    width: 60vw;
 }
 
-.quill {
+.editor {
     position: absolute;
-    height: 50vh;
+    height: 40vh;
+}
+
+.red {
+    background-color: red;
+    color: red;
+    font-style: italic;
 }
 
 .disabled {
@@ -27,3 +34,4 @@
     justify-content: center;
     align-items: center;
 }
+

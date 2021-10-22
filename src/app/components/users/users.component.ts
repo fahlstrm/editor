@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-
+import { FormBuilder, Validators, FormControl, FormGroup } from '@angular/forms';
 
 
 @Component({
@@ -10,14 +10,17 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class UsersComponent implements OnInit {
 
-  constructor(private http:HttpClient) { }
+  constructor(
+    private http:HttpClient,
+    private formBuilder: FormBuilder
+    ) { }
   availableUsers: any; 
   currentUsers: any; 
   id: any;
-  url = "https://jsramverk-editor-frah20.azurewebsites.net";
-  // url = "http://localhost:3000"
+  invitedUser: any;
+  // url = "https://jsramverk-editor-frah20.azurewebsites.net";
+  url = "http://localhost:3000"
 
-  // @Input() documentId: any = null;
 
   @Input('documentId') set docId(documentId: any) {
     if (documentId) {
@@ -33,21 +36,56 @@ export class UsersComponent implements OnInit {
         this.availableUsers = null;
     }
   }
+
+  @Input('type') set type(value: any) {
+    if (value) {
+        this.id = null;
+        this.currentUsers = null;
+        this.availableUsers = null;
+    }
+  }
+
+
+
   @Input() token: any;
+  @Input() doc: any;
+
+
+  email = new FormControl('', [Validators.required, Validators.minLength(6)]);
+  inviteUserForm: FormGroup = this.formBuilder.group({
+    email: this.email
+  });
+
+  async sendEmail() {
+    const headers = new HttpHeaders({ 'x-access-token': this.token});
+
+    const body = {
+      email: this.inviteUserForm.value.email,
+      id: this.id,
+      title: this.doc.title
+    }
+
+    await this.http.post(`${this.url}/documents/invite`, body, {headers}).subscribe((res: any)=> 
+       {
+         console.log(res)
+            
+       })
+       this.inviteUserForm.reset();
+  }
 
 
   ngOnInit(): void {
   }
 
-  async getDocUsers(id: any) {
+
+  async getDocUsers(id: any) { 
     const headers = new HttpHeaders({ 'x-access-token': this.token});
-    
+
     await this.http.get(`${this.url}/documents/users/${id}`, {headers}).subscribe((res: any)=> 
        {
          console.log(res)
          this.currentUsers = res.data.currentUsers;
          this.availableUsers = res.data.availableUsers;
-
        })
    }
  

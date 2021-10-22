@@ -1,17 +1,49 @@
+<div *ngIf="type == 'doc'; then doc else code"></div>
 
-<div class="quill">
-    <div class="alert" *ngIf="document.length == 0">
-        Du måste välja dokument för att kunna editera
-    </div > 
-    <div class="quill-div" [ngClass]="{'disabled' : document.length==0}">
-        <quill-editor name="content" format="html" placeholder="Skriv text här eller ladda in dokument"
+<ng-template #doc>
+    <div class="editor">
+        <div class="alert" *ngIf="document.length == 0">
+            Du måste välja dokument för att kunna editera
+        </div > 
+        <div class="quill-div" [ngClass]="{'disabled' : document.length==0}">
+            <quill-editor name="content" format="html" placeholder="Skriv text här eller ladda in dokument"
+                [sanitize]="false"
+                [(ngModel)]="content"
+                (keyup)="onKeyUp($event)"
+                (onContentChanged)="onChanged($event)"
+                (docToEdit)="updateEditor($event)"
+                [disabled]="document.length == 0"
+                (onSelectionChanged)="selectionChanged($event)"
+                >
+            </quill-editor>
+        </div>
+    </div>
+
+</ng-template>
+
+<ng-template #code>
+
+    <div class="editor">
+        <div class="alert" *ngIf="document.length == 0">
+            Du måste välja dokument för att kunna editera
+        </div>
+        <div class="codemirror-div" [ngClass]="{'disabled' : document.length==0}">
+            <ngx-codemirror
             [(ngModel)]="content"
             (keyup)="onKeyUp($event)"
             (onContentChanged)="onChanged($event)"
             (docToEdit)="updateEditor($event)"
             [disabled]="document.length == 0"
-            >
-        </quill-editor>
+            [options]="{
+                lineNumbers: true,
+                theme: 'material',
+                mode: 'javascript'
+            }"
+            ></ngx-codemirror>
+        </div>
+      
     </div>
+</ng-template>
 
-</div>
+
+

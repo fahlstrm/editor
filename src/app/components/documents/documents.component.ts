@@ -10,12 +10,13 @@ import { FormBuilder, Validators, FormControl, FormGroup } from '@angular/forms'
   styleUrls: ['./documents.component.css']
 })
 export class DocumentsComponent implements OnInit {
-  url = "https://jsramverk-editor-frah20.azurewebsites.net";
-  // url = "http://localhost:3000"
+  // url = "https://jsramverk-editor-frah20.azurewebsites.net";
+  url = "http://localhost:3000"
   documents: any;
   buttonText: string = 'Skapa nytt dokument';
-  checked: any = null;
+  // checked: any = null;
   idSelected: any=null;
+  type: string = 'doc';
 
   constructor(
     private http:HttpClient, 
@@ -30,35 +31,35 @@ export class DocumentsComponent implements OnInit {
 
   @Input('updateDocs') set updateDocs(value: any) {
     if (value) {
-      console.log(value)
       this.getDocuments();
     }
   }
 
-  // @Input('content') set content(value: any) {
-  //   if (value) {
-  //       console.log(value)
-  //       this.checked = "true";
-  //       this.getDocuments();
-  //   }
-  // }
+  @Input('type') set updateType(value: any) {
+    if (value) {
+      this.type = value;
+      this.idSelected = null;
+      this.getDocuments();
+    }
+  }
 
-  
+
   title = new FormControl('', [Validators.required, Validators.minLength(5)]);
   titleForm: FormGroup = this.formBuilder.group({
     title: this.title
   });
 
+
   createNewDoc() {
-    console.log(this.titleForm.value);
     const body = {
       title: this.titleForm.value.title,
+      type: this.type,
       username: this.user.user.username,
     }
     const headers = new HttpHeaders({ 'x-access-token': this.token});
+
     this.http.post(`${this.url}/save/new/doc`, body, {headers}).subscribe(res=> 
       {
-        console.log(res)
         this.getDocuments();
         this.titleForm.reset();
         this.reset.emit("reset");
@@ -73,8 +74,8 @@ export class DocumentsComponent implements OnInit {
     await this.getDocuments();
   }
 
+
   async getDocuments(){
-    // let username = this.user.user.username;
     fetch(`${this.url}/graphql`, {
       method: 'POST',
       headers: {
@@ -82,12 +83,10 @@ export class DocumentsComponent implements OnInit {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
       },
-      body: JSON.stringify({ query: `{ userDocuments(username : "${this.user.user.username}") {_id, title} }`  })
+      body: JSON.stringify({ query: `{ userDocuments(username : "${this.user.user.username}", type: "${this.type}") {_id, title} }`  })
   })
       .then(r => r.json())
       .then(data => {
-        console.log("i dokuyment i klient")
-        console.log('data returned:', data)
         data = Object.values(data);
         this.documents = data[0].userDocuments;
         });

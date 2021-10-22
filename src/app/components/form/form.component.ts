@@ -2,6 +2,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, Validators, FormControl, FormGroup } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 
+
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
@@ -11,17 +12,21 @@ export class FormComponent implements OnInit {
   existing: boolean = true;
   buttonText: string = 'Skapa ny användare';
   h2: string = 'Logga in för att åtkomst av dokument';
-  url = "https://jsramverk-editor-frah20.azurewebsites.net";
-  // url = "http://localhost:3000";
-  err: string = ``;   
+  // url = "https://jsramverk-editor-frah20.azurewebsites.net";
+  url = "http://localhost:3000";
+  err: string = ``; 
+  urlId: any = false;
+
+  
   @Output() auth = new EventEmitter<any>();
 
 
   constructor(
     private formBuilder: FormBuilder,
     private http:HttpClient) {
+     
+    }
 
-   }
 
   username = new FormControl('', [Validators.required]);
   password = new FormControl('', [Validators.required]);
@@ -47,6 +52,11 @@ export class FormComponent implements OnInit {
 
 
   ngOnInit(): void {
+    let urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('id')) {
+      this.urlId = urlParams.get('id');
+      this.createNewUser();
+    }
   }
 
 
@@ -84,20 +94,17 @@ export class FormComponent implements OnInit {
     let body = {
       username: this.createForm.value.newUsername,
       password: this.createForm.value.newPassword,
-      permission: this.createForm.value.permission
+      urlId: this.urlId,
     }
 
     this.http.post(`${this.url}/users/create`, body).subscribe((res: any)=> 
-      {
-        if (res.data.result.insertedId) {
-          this.returnLogin();
-
-          location.reload();
-        }
-      })
-
+    {
+      if (res.data.id) {
+        console.log(res.data.result)
+        this.auth.emit(res.data.result);
+      }
+    })
     this.createForm.reset();
-
   }
 
 
