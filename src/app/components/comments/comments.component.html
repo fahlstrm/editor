@@ -1,4 +1,4 @@
-<div *ngIf="type == 'doc' && documentId; then doc else code"></div>
+<div *ngIf="show; then doc else code"></div>
 <ng-template #doc>
 <h3> Kommentarer </h3>
 

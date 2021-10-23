@@ -16,7 +16,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { FormComponent } from './components/form/form.component';
 import { UsersComponent } from './components/users/users.component';
-// const config: SocketIoConfig = { url: 'https://jsramverk-editor-frah20.azurewebsites.net', options: {} };
+const config: SocketIoConfig = { url: 'https://jsramverk-editor-frah20.azurewebsites.net', options: {} };
 
 //Codemirror 
 import { CodemirrorModule } from '@ctrl/ngx-codemirror';
@@ -24,7 +24,7 @@ import { CommentsComponent } from './components/comments/comments.component';
 
 
 
-const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
+// const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 
 
 

@@ -35,16 +35,13 @@ export class AppComponent {
 
   resetAll(reset: any) {
     this.reset = reset;
-    console.log(this.reset)
   }
 
   getContent(content : any) {
-    console.log("i app", content)
     this.content = content;
   }
 
   getCollectedDoc(collectedDoc : any) {
-    console.log(collectedDoc)
     this.docToEdit = collectedDoc;
     if (this.type == "doc") {
       this.docToEdit.data.comments.reverse();
@@ -53,7 +50,6 @@ export class AppComponent {
 
   getId(id : any) {
     this.documentId = id;
-    console.log("i app", this.documentId)
   }
 
   getAuth(auth: any) {

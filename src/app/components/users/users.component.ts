@@ -18,8 +18,8 @@ export class UsersComponent implements OnInit {
   currentUsers: any; 
   id: any;
   invitedUser: any;
-  // url = "https://jsramverk-editor-frah20.azurewebsites.net";
-  url = "http://localhost:3000"
+  url = "https://jsramverk-editor-frah20.azurewebsites.net";
+  // url = "http://localhost:3000"
 
 
   @Input('documentId') set docId(documentId: any) {
@@ -67,7 +67,7 @@ export class UsersComponent implements OnInit {
 
     await this.http.post(`${this.url}/documents/invite`, body, {headers}).subscribe((res: any)=> 
        {
-         console.log(res)
+         console.log("invite sent")
             
        })
        this.inviteUserForm.reset();
@@ -83,7 +83,6 @@ export class UsersComponent implements OnInit {
 
     await this.http.get(`${this.url}/documents/users/${id}`, {headers}).subscribe((res: any)=> 
        {
-         console.log(res)
          this.currentUsers = res.data.currentUsers;
          this.availableUsers = res.data.availableUsers;
        })
@@ -98,7 +97,6 @@ export class UsersComponent implements OnInit {
     
     this.http.post(`${this.url}/save/new/user`, body, {headers}).subscribe((res: any)=> 
       {
-        console.log(res);
         this.getDocUsers(this.id);
       })
   }

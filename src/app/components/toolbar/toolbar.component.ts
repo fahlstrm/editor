@@ -18,8 +18,8 @@ export class ToolbarComponent implements OnInit {
 
   typeEditor: string = 'doc';
 
-  // url = "https://jsramverk-editor-frah20.azurewebsites.net";
-  url = "http://localhost:3000"
+  url = "https://jsramverk-editor-frah20.azurewebsites.net";
+  // url = "http://localhost:3000"
 
   constructor(private http:HttpClient) { }
 

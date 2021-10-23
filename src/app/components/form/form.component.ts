@@ -12,8 +12,8 @@ export class FormComponent implements OnInit {
   existing: boolean = true;
   buttonText: string = 'Skapa ny användare';
   h2: string = 'Logga in för att åtkomst av dokument';
-  // url = "https://jsramverk-editor-frah20.azurewebsites.net";
-  url = "http://localhost:3000";
+  url = "https://jsramverk-editor-frah20.azurewebsites.net";
+  // url = "http://localhost:3000";
   err: string = ``; 
   urlId: any = false;
 

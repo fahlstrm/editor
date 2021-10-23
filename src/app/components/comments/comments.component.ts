@@ -11,14 +11,15 @@ import { ChangeDetectorRef } from '@angular/core';
   styleUrls: ['./comments.component.css']
 })
 export class CommentsComponent implements OnInit {
-  // url = "https://jsramverk-editor-frah20.azurewebsites.net";
-  url ="http://localhost:3000"
+  url = "https://jsramverk-editor-frah20.azurewebsites.net";
+  // url ="http://localhost:3000"
   selected: any = null;
   comments: any;
   id: any = null;
   content: any = null;
-  commentLength: any = 0;
+  commentLength: any;
   previous : any = null;
+  show: boolean = false;
 
   constructor(
     private http:HttpClient, 
@@ -30,19 +31,21 @@ export class CommentsComponent implements OnInit {
   @Input() token: any;
   @Input() documentId: any;
   @Input() docToEdit: any;
-  @Input() type: any;
+  @Input() type: string = "doc";
 
   
   @Input('docToEdit') set length(value: any) {
     if (value) {
-      if (value.data.comments.length != 0) {
+      if (value.data.type == "doc") {
+        this.show = true;
+      }
+      if (value.data.comments) {
           this.commentLength = value.data.comments;
-
       } else {
         this.commentLength.length = 0;
       }
+      console.log(value)
       this.docToEdit = value;
-
     }
   }
 
@@ -54,6 +57,16 @@ export class CommentsComponent implements OnInit {
     }
   }
 
+  @Input('type') set setType(value: any) {
+    if (value == "code") {
+      this.commentLength.length = 0;
+      this.documentId = null;
+      this.type = "code";
+      this.show = false;
+    } 
+  }
+
+
   comment = new FormControl('', [Validators.required, Validators.minLength(5)]);
   commentForm: FormGroup = this.formBuilder.group({
     comment: this.comment
@@ -61,7 +74,6 @@ export class CommentsComponent implements OnInit {
 
 createNewComment() {
     var commentId; 
-    console.log(this.docToEdit)
     if (!this.docToEdit.data.comments.length) {
       commentId = 0;
     } else {

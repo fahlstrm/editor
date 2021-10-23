@@ -10,8 +10,8 @@ import { FormBuilder, Validators, FormControl, FormGroup } from '@angular/forms'
   styleUrls: ['./documents.component.css']
 })
 export class DocumentsComponent implements OnInit {
-  // url = "https://jsramverk-editor-frah20.azurewebsites.net";
-  url = "http://localhost:3000"
+  url = "https://jsramverk-editor-frah20.azurewebsites.net";
+  // url = "http://localhost:3000"
   documents: any;
   buttonText: string = 'Skapa nytt dokument';
   // checked: any = null;

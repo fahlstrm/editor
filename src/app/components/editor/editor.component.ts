@@ -14,8 +14,8 @@ export class EditorComponent implements OnInit {
   content: any = ``;
   edit: string = ``;
   id: string = ``;
-  // url = "https://jsramverk-editor-frah20.azurewebsites.net";
-  url ="http://localhost:3000"
+  url = "https://jsramverk-editor-frah20.azurewebsites.net";
+  // url ="http://localhost:3000"
   document: any = [];
   type: string = `doc`;
   selected: any = null;
@@ -101,7 +101,6 @@ export class EditorComponent implements OnInit {
     
     this.http.get(`${this.url}/documents/${id}`, {headers}).subscribe(( res: any)=> 
       {
-        console.log(res.data.content)
         this.content = res.data.content;
         this.document = res;
         this.collectedDoc.emit(this.document);
@@ -124,15 +123,12 @@ export class EditorComponent implements OnInit {
   onKeyUp(content: any) {
     this.updated.emit(this.content);
     const body: any = {
-      id: this.document._id,
-      title: this.document.title,
-      users: this.document.users,
-      // id: this.document.data._id,
+      users: this.document.data.users,
+      id: this.document.data._id,
       type: this.type,
-      // title: this.document.data.title,
+      title: this.document.data.title,
       content: this.content,
       comments: this.docToEdit.comments
-      // users: this.document.data.users
     }
 
     this.socketService.sendMessage(body);
