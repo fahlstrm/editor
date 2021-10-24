@@ -17,7 +17,7 @@ export class CommentsComponent implements OnInit {
   comments: any;
   id: any = null;
   content: any = null;
-  commentLength: any;
+  commentLength: any = [];
   previous : any = null;
   show: boolean = false;
 
@@ -39,12 +39,11 @@ export class CommentsComponent implements OnInit {
       if (value.data.type == "doc") {
         this.show = true;
       }
-      if (value.data.comments) {
+      if (value.data.comments != null) {
           this.commentLength = value.data.comments;
       } else {
         this.commentLength.length = 0;
       }
-      console.log(value)
       this.docToEdit = value;
     }
   }
@@ -74,7 +73,7 @@ export class CommentsComponent implements OnInit {
 
 createNewComment() {
     var commentId; 
-    if (!this.docToEdit.data.comments.length) {
+    if (this.commentLength == 0) {
       commentId = 0;
     } else {
       commentId = this.docToEdit.data.comments.length;

@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { SocketService } from 'src/app/socket.service';
-import { DomSanitizer } from '@angular/platform-browser'
+import { DomSanitizer } from '@angular/platform-browser';
 
 
 @Component({
@@ -24,7 +24,6 @@ export class EditorComponent implements OnInit {
   @Output() collectedDoc = new EventEmitter<any>();
   @Output() comment = new EventEmitter<any>();
   
-
 
   constructor(
     private http:HttpClient,

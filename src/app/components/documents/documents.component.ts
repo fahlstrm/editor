@@ -3,7 +3,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { SocketService } from 'src/app/socket.service';
 import { FormBuilder, Validators, FormControl, FormGroup } from '@angular/forms';
 
-
 @Component({
   selector: 'app-documents',
   templateUrl: './documents.component.html',
@@ -15,7 +14,7 @@ export class DocumentsComponent implements OnInit {
   documents: any;
   buttonText: string = 'Skapa nytt dokument';
   // checked: any = null;
-  idSelected: any=null;
+  idSelected: any = null;
   type: string = 'doc';
 
   constructor(
@@ -66,6 +65,12 @@ export class DocumentsComponent implements OnInit {
       })
   }
 
+  
+  onSelected(event: any) {
+    this.documentId.emit(event.target.id);
+    this.socketService.createRoom(event.target.id);
+  } 
+
   async ngOnInit() {
     await this.getDocuments();
   }
@@ -108,8 +113,4 @@ export class DocumentsComponent implements OnInit {
   //     })
   // }
 
-  onSelected(event: any) {
-    this.documentId.emit(event.target.id);
-    this.socketService.createRoom(event.target.id);
-  } 
 }
