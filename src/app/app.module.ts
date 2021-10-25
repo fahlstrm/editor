@@ -22,8 +22,6 @@ const config: SocketIoConfig = { url: 'https://jsramverk-editor-frah20.azurewebs
 import { CodemirrorModule } from '@ctrl/ngx-codemirror';
 import { CommentsComponent } from './components/comments/comments.component';
 
-
-
 // const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 
 

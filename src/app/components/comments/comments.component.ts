@@ -25,6 +25,7 @@ export class CommentsComponent implements OnInit {
     private http:HttpClient, 
     private socketService: SocketService,
     private cd: ChangeDetectorRef,
+
     private formBuilder: FormBuilder) {}
 
   @Input() user: any;

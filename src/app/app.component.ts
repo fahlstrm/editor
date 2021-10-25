@@ -23,7 +23,6 @@ export class AppComponent {
   updateDocs:string = ``;
   auth: boolean = false;
   token: any = null;
-  // headers: any = this.httpOptions;
   user: object = {
     // user: {
     //   username: "frida"

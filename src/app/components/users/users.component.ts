@@ -62,13 +62,12 @@ export class UsersComponent implements OnInit {
     const body = {
       email: this.inviteUserForm.value.email,
       id: this.id,
-      title: this.doc.title
+      title: this.doc.data.title
     }
 
     await this.http.post(`${this.url}/documents/invite`, body, {headers}).subscribe((res: any)=> 
        {
          console.log("invite sent")
-            
        })
        this.inviteUserForm.reset();
   }

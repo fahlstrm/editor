@@ -24,7 +24,6 @@ export class FormComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private http:HttpClient) {
-     
     }
 
 
@@ -100,7 +99,6 @@ export class FormComponent implements OnInit {
     this.http.post(`${this.url}/users/create`, body).subscribe((res: any)=> 
     {
       if (res.data.id) {
-        console.log(res.data.result)
         this.auth.emit(res.data.result);
       }
     })
